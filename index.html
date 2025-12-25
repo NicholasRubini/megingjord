@@ -1,0 +1,2998 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MEGINGJÖRÐ — Kettlebell Strength | Nicholas Rubini</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-deep: #0a0a0c;
+      --bg-card: #111114;
+      --bg-elevated: #18181c;
+      --bg-input: #1e1e24;
+      --gold: #c9a227;
+      --gold-muted: #a68a1f;
+      --gold-glow: rgba(201, 162, 39, 0.15);
+      --ice: #7FB3D5;
+      --ice-glow: rgba(127, 179, 213, 0.15);
+      --green: #4ade80;
+      --green-glow: rgba(74, 222, 128, 0.15);
+      --orange: #fb923c;
+      --orange-glow: rgba(251, 146, 60, 0.15);
+      --red: #f87171;
+      --red-glow: rgba(248, 113, 113, 0.15);
+      --purple: #a78bfa;
+      --purple-glow: rgba(167, 139, 250, 0.15);
+      --text: #f0ede6;
+      --text-secondary: #a8a59e;
+      --text-dim: #6b6862;
+      --border: rgba(201, 162, 39, 0.12);
+      --font-display: 'Cinzel', serif;
+      --font-body: 'Inter', -apple-system, sans-serif;
+    }
+    
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: var(--font-body);
+      background: var(--bg-deep);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: 
+        radial-gradient(ellipse at 50% 0%, rgba(201, 162, 39, 0.03) 0%, transparent 60%),
+        radial-gradient(ellipse at 100% 100%, rgba(127, 179, 213, 0.02) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 40px 24px 60px;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .header { text-align: center; margin-bottom: 48px; }
+    
+    .title {
+      font-family: var(--font-display);
+      font-size: clamp(1.75rem, 5vw, 2.5rem);
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+    
+    .subtitle {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+    
+    .exercise-title {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      color: var(--ice);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    
+    .exercise-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    
+    .exercise-card {
+      background: var(--bg-card);
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      padding: 24px 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .exercise-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, transparent 0%, rgba(201, 162, 39, 0.05) 100%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .exercise-card:hover {
+      border-color: var(--gold-muted);
+      transform: translateY(-4px);
+    }
+    
+    .exercise-card:hover::before { opacity: 1; }
+    
+    .exercise-card.selected {
+      border-color: var(--gold);
+      background: linear-gradient(135deg, var(--bg-card) 0%, rgba(201, 162, 39, 0.08) 100%);
+    }
+    
+    .exercise-card.selected::after {
+      content: '✓';
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 24px;
+      height: 24px;
+      background: var(--gold);
+      color: var(--bg-deep);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    
+    .exercise-rune {
+      font-size: 2.5rem;
+      color: var(--gold);
+      margin-bottom: 12px;
+      display: block;
+    }
+    
+    .exercise-name {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+    
+    .exercise-desc {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      font-style: italic;
+      line-height: 1.4;
+    }
+    
+    .card {
+      background: var(--bg-card);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      padding: 28px;
+      margin-bottom: 20px;
+    }
+    
+    .card-title {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .input-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .input-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+    .input-group { margin-bottom: 16px; }
+    
+    .label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    
+    .input, .select {
+      width: 100%;
+      padding: 14px 16px;
+      font-size: 1rem;
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s;
+      font-family: var(--font-body);
+    }
+    
+    .input:focus, .select:focus { border-color: var(--gold); }
+    .input::placeholder { color: var(--text-dim); }
+    .input.input-error { border-color: #ef4444; background: rgba(239, 68, 68, 0.1); }
+    .input.input-warning { border-color: #f59e0b; background: rgba(245, 158, 11, 0.1); }
+    .input-hint { font-size: 0.75rem; margin-top: 4px; display: none; }
+    .input-hint.visible { display: block; }
+    .input-hint.error { color: #ef4444; }
+    .input-hint.warning { color: #f59e0b; }
+    
+    .rm-estimates {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 16px;
+      padding: 16px;
+      background: var(--bg-elevated);
+      border-radius: 8px;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
+    }
+    
+    .rm-estimates.visible { opacity: 1; transform: translateY(0); }
+    .rm-estimate { text-align: center; }
+    
+    .rm-estimate-value {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--gold);
+    }
+    
+    .rm-estimate-label {
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    
+    .option-group { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    
+    .option-btn {
+      padding: 12px 16px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      background: var(--bg-input);
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: var(--font-body);
+    }
+    
+    .option-btn.active {
+      background: var(--gold);
+      color: var(--bg-deep);
+      border-color: var(--gold);
+    }
+    
+    .checkbox-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      background: var(--bg-input);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      cursor: pointer;
+    }
+    
+    .checkbox-box {
+      width: 20px;
+      height: 20px;
+      border-radius: 4px;
+      border: 2px solid var(--text-dim);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+    
+    .checkbox-box.checked { background: var(--gold); border-color: var(--gold); }
+    
+    .btn-primary {
+      width: 100%;
+      padding: 16px 24px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      font-family: var(--font-display);
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-muted) 100%);
+      color: var(--bg-deep);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(201, 162, 39, 0.3);
+    }
+    
+    .btn-primary:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+    
+    .btn-secondary {
+      padding: 12px 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      font-family: var(--font-display);
+      background: var(--bg-elevated);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: all 0.2s;
+    }
+    
+    .btn-secondary:hover { border-color: var(--gold); color: var(--gold); }
+    .btn-icon { display: inline-flex; align-items: center; gap: 8px; }
+    .actions-bar { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+    
+    .button-row {
+      display: flex;
+      gap: 12px;
+    }
+    
+    .button-row .btn-secondary {
+      flex: 0 0 auto;
+    }
+    
+    .button-row .btn-primary {
+      flex: 1;
+    }
+    
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    
+    .stat-card {
+      background: var(--bg-elevated);
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+    }
+    
+    .stat-value {
+      font-family: var(--font-display);
+      font-size: 1.75rem;
+      font-weight: 600;
+      color: var(--gold);
+      margin-bottom: 4px;
+    }
+    
+    .stat-label {
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    
+    .projection-card {
+      background: linear-gradient(135deg, var(--bg-elevated) 0%, var(--bg-card) 100%);
+      border: 1px solid var(--gold-glow);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+    
+    .projection-title {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-bottom: 8px;
+    }
+    
+    .projection-value {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      font-weight: 600;
+      color: var(--green);
+      margin-bottom: 4px;
+    }
+    
+    .projection-detail { font-size: 0.85rem; color: var(--text-secondary); }
+    .projection-detail span { color: var(--green); font-weight: 600; }
+    
+    /* Coach Mode Toggle */
+    .coach-mode-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .coach-mode-toggle:hover { border-color: var(--purple); }
+    
+    .coach-mode-toggle.active {
+      border-color: var(--purple);
+      background: linear-gradient(135deg, var(--bg-card) 0%, rgba(167, 139, 250, 0.08) 100%);
+    }
+    
+    .coach-mode-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .coach-mode-label svg { color: var(--purple); }
+    
+    .coach-mode-label span {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text);
+    }
+    
+    .coach-mode-label small {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      font-weight: 400;
+    }
+    
+    .toggle-switch {
+      width: 48px;
+      height: 26px;
+      background: var(--bg-input);
+      border-radius: 13px;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+    
+    .toggle-switch::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: var(--text-dim);
+      border-radius: 50%;
+      top: 3px;
+      left: 3px;
+      transition: all 0.3s ease;
+    }
+    
+    .coach-mode-toggle.active .toggle-switch {
+      background: var(--purple);
+    }
+    
+    .coach-mode-toggle.active .toggle-switch::after {
+      left: 25px;
+      background: white;
+    }
+    
+    /* Coach Analytics Section */
+    .coach-analytics {
+      display: none;
+      animation: fadeIn 0.4s ease;
+    }
+    
+    .coach-analytics.visible { display: block; }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .analytics-card {
+      background: var(--bg-card);
+      border: 1px solid var(--purple-glow);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 20px;
+    }
+    
+    .analytics-title {
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--purple);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .chart-container {
+      position: relative;
+      width: 100%;
+      height: 220px;
+      margin-bottom: 20px;
+    }
+    
+    .chart-container svg { width: 100%; height: 100%; }
+    
+    .chart-legend {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      font-size: 0.8rem;
+    }
+    
+    .chart-legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .chart-legend-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+    
+    .chart-legend-dot.volume { background: var(--ice); }
+    .chart-legend-dot.intensity { background: var(--gold); }
+    
+    .volume-summary {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+    
+    .volume-stat { text-align: center; }
+    
+    .volume-stat-value {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--ice);
+    }
+    
+    .volume-stat-label {
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-top: 4px;
+    }
+    
+    .weekly-volumes {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: 10px;
+      margin-top: 16px;
+    }
+    
+    .weekly-volume-item {
+      background: var(--bg-elevated);
+      border-radius: 8px;
+      padding: 12px;
+      text-align: center;
+    }
+    
+    .weekly-volume-item.deload {
+      border: 1px solid var(--green-glow);
+    }
+    
+    .weekly-volume-week {
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    
+    .weekly-volume-value {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+      margin: 4px 0;
+    }
+    
+    .weekly-volume-delta {
+      font-size: 0.7rem;
+      font-weight: 500;
+    }
+    
+    .weekly-volume-delta.positive { color: var(--green); }
+    .weekly-volume-delta.negative { color: var(--red); }
+    
+    /* Export Options */
+    .export-options {
+      display: none;
+      margin-top: 12px;
+      padding: 12px 16px;
+      background: var(--bg-elevated);
+      border-radius: 8px;
+      border: 1px dashed var(--purple-glow);
+    }
+    
+    .export-options.visible { display: block; }
+    
+    .export-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+    
+    .export-option input { display: none; }
+    
+    .export-option-box {
+      width: 18px;
+      height: 18px;
+      border-radius: 4px;
+      border: 2px solid var(--text-dim);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+    
+    .export-option input:checked + .export-option-box {
+      background: var(--purple);
+      border-color: var(--purple);
+    }
+    
+    .export-option input:checked + .export-option-box::after {
+      content: '✓';
+      color: white;
+      font-size: 10px;
+      font-weight: 700;
+    }
+    
+    .week-nav { display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
+    
+    .week-btn {
+      padding: 10px 16px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      background: var(--bg-elevated);
+      color: var(--text-dim);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: var(--font-body);
+      position: relative;
+    }
+    
+    .week-btn.active {
+      background: var(--gold);
+      color: var(--bg-deep);
+      border-color: var(--gold);
+    }
+    
+    .week-btn.modified::after {
+      content: '';
+      position: absolute;
+      top: -3px;
+      right: -3px;
+      width: 8px;
+      height: 8px;
+      background: var(--orange);
+      border-radius: 50%;
+    }
+    
+    .day-card {
+      background: var(--bg-card);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      margin-bottom: 16px;
+      overflow: hidden;
+    }
+    
+    .day-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
+    }
+    
+    .day-title {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: 0.05em;
+    }
+    
+    .day-badges { display: flex; gap: 8px; align-items: center; }
+    
+    .badge {
+      padding: 6px 12px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    
+    .badge-gold { background: var(--gold-glow); color: var(--gold); }
+    .badge-ice { background: var(--ice-glow); color: var(--ice); }
+    .badge-green { background: var(--green-glow); color: var(--green); }
+    .badge-orange { background: var(--orange-glow); color: var(--orange); }
+    .badge-red { background: var(--red-glow); color: var(--red); }
+    .badge-purple { background: var(--purple-glow); color: var(--purple); }
+    
+    .day-table { width: 100%; border-collapse: collapse; }
+    
+    .day-table th {
+      padding: 12px 24px;
+      text-align: left;
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      background: var(--bg-elevated);
+    }
+    
+    .day-table td {
+      padding: 14px 24px;
+      border-top: 1px solid var(--border);
+      font-size: 0.9rem;
+    }
+    
+    .day-table .weight { color: var(--ice); font-weight: 600; }
+    
+    .day-footer {
+      padding: 12px 24px;
+      background: var(--bg-elevated);
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    
+    .day-footer-left { font-style: italic; }
+    
+    .day-volume-badge {
+      display: none;
+      background: var(--ice-glow);
+      color: var(--ice);
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      font-style: normal;
+    }
+    
+    .day-volume-badge.visible { display: inline-block; }
+    
+    .editable {
+      cursor: pointer;
+      padding: 4px 8px;
+      margin: -4px -8px;
+      border-radius: 4px;
+      transition: all 0.2s;
+      display: inline-block;
+      min-width: 40px;
+      position: relative;
+    }
+    
+    .editable:hover { background: var(--bg-elevated); }
+    .editable.modified { border-left: 2px solid var(--orange); padding-left: 10px; }
+    .editable.editing { background: var(--bg-input); padding: 0; margin: 0; }
+    
+    .editable input {
+      width: 100%;
+      min-width: 60px;
+      padding: 6px 10px;
+      font-size: 0.9rem;
+      background: var(--bg-input);
+      border: 2px solid var(--gold);
+      border-radius: 4px;
+      color: var(--text);
+      outline: none;
+      font-family: var(--font-body);
+    }
+    
+    .propagate-popover {
+      position: fixed;
+      background: var(--bg-card);
+      border: 1px solid var(--gold);
+      border-radius: 12px;
+      padding: 16px 20px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+      z-index: 1000;
+      min-width: 280px;
+      animation: popIn 0.2s ease;
+    }
+    
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.9) translateY(-10px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    
+    .propagate-title { font-size: 0.85rem; font-weight: 600; color: var(--text); margin-bottom: 12px; }
+    .propagate-options { display: flex; flex-direction: column; gap: 8px; }
+    
+    .propagate-btn {
+      padding: 10px 16px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      background: var(--bg-elevated);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: left;
+    }
+    
+    .propagate-btn:hover { border-color: var(--gold); color: var(--gold); }
+    .propagate-btn.primary { background: var(--gold); color: var(--bg-deep); border-color: var(--gold); }
+    .propagate-btn.primary:hover { background: var(--gold-muted); }
+    .propagate-btn small { display: block; font-size: 0.7rem; color: var(--text-dim); margin-top: 2px; }
+    .propagate-btn.primary small { color: rgba(0,0,0,0.5); }
+    
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--bg-card);
+      border: 1px solid var(--gold);
+      border-radius: 8px;
+      padding: 12px 20px;
+      font-size: 0.85rem;
+      color: var(--text);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+      z-index: 1001;
+      animation: toastIn 0.3s ease;
+    }
+    
+    @keyframes toastIn {
+      from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+      to { opacity: 1; transform: translateX(-50%) translateY(0); }
+    }
+    
+    .toast.success { border-color: var(--green); }
+    .toast.success::before { content: '✓ '; color: var(--green); }
+    
+    .error {
+      background: rgba(220, 38, 38, 0.1);
+      border: 1px solid rgba(220, 38, 38, 0.3);
+      color: #fca5a5;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      margin-bottom: 16px;
+    }
+    
+    .hint { font-size: 0.75rem; color: var(--text-dim); margin-top: 8px; }
+    
+    .hint-warning {
+      background: rgba(251, 146, 60, 0.1);
+      border: 1px solid rgba(251, 146, 60, 0.3);
+      border-radius: 6px;
+      padding: 10px 14px;
+      margin-top: 12px;
+      font-size: 0.8rem;
+      color: var(--orange);
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    
+    .hint-warning svg { flex-shrink: 0; margin-top: 2px; }
+    
+    .edit-mode-banner {
+      background: linear-gradient(135deg, var(--bg-elevated) 0%, rgba(251, 146, 60, 0.1) 100%);
+      border: 1px solid var(--orange-glow);
+      border-radius: 8px;
+      padding: 12px 20px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.85rem;
+    }
+    
+    .edit-mode-banner svg { color: var(--orange); flex-shrink: 0; }
+    .edit-mode-banner span { color: var(--text-secondary); }
+    
+    .footer {
+      text-align: center;
+      padding: 32px 0;
+      border-top: 1px solid var(--border);
+      margin-top: 40px;
+    }
+    
+    .footer-text { font-size: 0.75rem; color: var(--text-dim); letter-spacing: 0.1em; }
+    .footer-brand { font-family: var(--font-display); color: var(--gold); font-weight: 500; }
+    
+    .hidden { display: none !important; }
+    #ig-canvas { position: fixed; left: -9999px; top: -9999px; }
+    
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 20px;
+    }
+    
+    .modal {
+      background: var(--bg-card);
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      max-width: 500px;
+      width: 100%;
+      max-height: 90vh;
+      overflow: auto;
+    }
+    
+    .modal-header {
+      padding: 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .modal-title {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    
+    .modal-close {
+      background: none;
+      border: none;
+      color: var(--text-dim);
+      cursor: pointer;
+      font-size: 1.5rem;
+      line-height: 1;
+    }
+    
+    .modal-body { padding: 24px; }
+    
+    .ig-preview {
+      background: var(--bg-deep);
+      border-radius: 12px;
+      padding: 32px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    
+    .ig-preview-title {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      color: var(--gold);
+      margin-bottom: 8px;
+      letter-spacing: 0.1em;
+    }
+    
+    .ig-preview-subtitle {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-bottom: 24px;
+    }
+    
+    .ig-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 24px; }
+    .ig-stat { background: var(--bg-elevated); padding: 16px; border-radius: 8px; }
+    
+    .ig-stat-value {
+      font-family: var(--font-display);
+      font-size: 1.75rem;
+      color: var(--text);
+      font-weight: 600;
+    }
+    
+    .ig-stat-label {
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    
+    .ig-brand {
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      color: var(--gold);
+      letter-spacing: 0.15em;
+    }
+    
+    .step-indicator {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 32px;
+    }
+    
+    .step-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--bg-elevated);
+      border: 2px solid var(--border);
+      transition: all 0.3s ease;
+    }
+    
+    .step-dot.active { background: var(--gold); border-color: var(--gold); }
+    .step-dot.completed { background: var(--gold-muted); border-color: var(--gold-muted); }
+    
+    @media (max-width: 768px) {
+      .input-grid { grid-template-columns: 1fr; }
+      .input-grid-2 { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .option-group { grid-template-columns: 1fr; }
+      .day-table th, .day-table td { padding: 10px 16px; font-size: 0.8rem; }
+      .actions-bar { flex-direction: column; }
+      .btn-secondary { width: 100%; justify-content: center; }
+      .exercise-grid { grid-template-columns: repeat(2, 1fr); }
+      .volume-summary { grid-template-columns: 1fr; }
+      .chart-container { height: 180px; }
+      
+      /* Button row stacking on mobile */
+      .button-row {
+        flex-direction: column;
+      }
+      
+      .button-row .btn-secondary,
+      .button-row .btn-primary {
+        width: 100%;
+        flex: none;
+      }
+      
+      /* Mobile Touch Optimization */
+      .option-btn {
+        min-height: 48px; /* Apple HIG minimum touch target */
+        padding: 14px 16px;
+      }
+      
+      .checkbox-wrap {
+        min-height: 52px;
+      }
+      
+      .week-btn {
+        min-width: 44px;
+        min-height: 44px;
+        padding: 10px 14px;
+      }
+      
+      .btn-primary, .btn-secondary {
+        min-height: 52px;
+      }
+      
+      .editable {
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+      }
+      
+      /* Swipe hint */
+      .week-nav-container {
+        position: relative;
+      }
+      
+      .swipe-hint {
+        display: block;
+        text-align: center;
+        font-size: 0.7rem;
+        color: var(--text-dim);
+        margin-top: 8px;
+        opacity: 0.7;
+      }
+    }
+    
+    @media (min-width: 769px) {
+      .swipe-hint { display: none; }
+    }
+    
+    @media (max-width: 400px) {
+      .exercise-grid { grid-template-columns: 1fr; }
+    }
+    
+    /* Touch feedback */
+    @media (hover: none) {
+      .option-btn:active,
+      .btn-primary:active,
+      .btn-secondary:active,
+      .week-btn:active,
+      .exercise-card:active {
+        transform: scale(0.97);
+        opacity: 0.9;
+      }
+      
+      .editable:active {
+        background: var(--bg-elevated);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <h1 class="title">MEGINGJÖRÐ</h1>
+      <p class="subtitle">Raddoppia la tua forza</p>
+    </header>
+    
+    <div class="step-indicator">
+      <div class="step-dot active" id="step-dot-1"></div>
+      <div class="step-dot" id="step-dot-2"></div>
+      <div class="step-dot" id="step-dot-3"></div>
+    </div>
+    
+    <!-- Step 1: Exercise Selection -->
+    <div id="step-exercise">
+      <div class="card">
+        <h2 class="card-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M12 6v6l4 2"/>
+          </svg>
+          Scegli il Tuo Focus
+        </h2>
+        
+        <div class="exercise-grid" id="exercise-grid">
+          <div class="exercise-card" data-exercise="snatch">
+            <span class="exercise-rune">ᛟ</span>
+            <div class="exercise-name">Snatch</div>
+            <div class="exercise-desc">Il fulmine di Thor — potenza esplosiva pura</div>
+          </div>
+
+          <div class="exercise-card" data-exercise="cleanAndJerk">
+            <span class="exercise-rune">ᚱ</span>
+            <div class="exercise-name">Clean & Jerk</div>
+            <div class="exercise-desc">L'ascesa di Mjölnir — dominio totale</div>
+          </div>
+          <div class="exercise-card" data-exercise="press">
+            <span class="exercise-rune">ᛉ</span>
+            <div class="exercise-name">Press</div>
+            <div class="exercise-desc">La colonna di Yggdrasil — forza inamovibile</div>
+          </div>
+          <div class="exercise-card" data-exercise="cleanAndPress">
+            <span class="exercise-rune">ᚹ</span>
+            <div class="exercise-name">Clean & Press</div>
+            <div class="exercise-desc">Il sentiero dell'Einherjar — il lift completo</div>
+          </div>
+        </div>
+      </div>
+      
+      <button class="btn-primary" id="next-to-config" disabled>Continua</button>
+    </div>
+    
+    <!-- Step 2: Configuration -->
+    <div id="step-config" class="hidden">
+      <div class="card">
+        <h2 class="card-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M12 3v18M12 3l-6 9h12l-6-9"/>
+          </svg>
+          Massimali — <span id="selected-exercise-name" class="exercise-title"></span>
+        </h2>
+        
+        <div id="error" class="error hidden"></div>
+        
+        <div class="input-grid">
+          <div class="input-group">
+            <label class="label">1RM (kg)</label>
+            <input type="number" id="oneRM" class="input" placeholder="es. 32" min="8" max="100">
+            <div class="input-hint" id="oneRM-hint"></div>
+          </div>
+          <div class="input-group">
+            <label class="label">5RM (kg)</label>
+            <input type="number" id="fiveRM" class="input" placeholder="es. 28" min="8" max="100">
+            <div class="input-hint" id="fiveRM-hint"></div>
+          </div>
+          <div class="input-group">
+            <label class="label">10RM (kg)</label>
+            <input type="number" id="tenRM" class="input" placeholder="es. 24" min="8" max="100">
+            <div class="input-hint" id="tenRM-hint"></div>
+          </div>
+        </div>
+        
+        <div class="hint-warning">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M12 8v4M12 16h.01"/>
+          </svg>
+          <div>
+            <strong>Usa un valore conservativo.</strong> Inserisci il tuo 1RM arrotondato per difetto (es. se il tuo vero 1RM è 32kg, inserisci 28-30kg). Il programma raggiungerà il tuo massimale reale solo nelle ultime settimane.
+          </div>
+        </div>
+        
+        <div class="rm-estimates" id="rm-estimates">
+          <div class="rm-estimate">
+            <div class="rm-estimate-value" id="est-1rm">—</div>
+            <div class="rm-estimate-label">1RM Stimato</div>
+          </div>
+          <div class="rm-estimate">
+            <div class="rm-estimate-value" id="est-5rm">—</div>
+            <div class="rm-estimate-label">5RM Stimato</div>
+          </div>
+          <div class="rm-estimate">
+            <div class="rm-estimate-value" id="est-10rm">—</div>
+            <div class="rm-estimate-label">10RM Stimato</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card">
+        <h2 class="card-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="12" cy="12" r="9"/>
+            <path d="M12 3v9l6 3"/>
+          </svg>
+          Configurazione
+        </h2>
+        
+        <div class="input-grid-2">
+          <div class="input-group">
+            <label class="label">Durata (settimane)</label>
+            <select id="duration" class="select">
+              <option value="4">4 settimane</option>
+              <option value="6">6 settimane</option>
+              <option value="8" selected>8 settimane</option>
+              <option value="10">10 settimane</option>
+              <option value="12">12 settimane</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label class="label">Frequenza settimanale</label>
+            <select id="frequency" class="select">
+              <option value="2">2x / settimana</option>
+              <option value="3">3x / settimana</option>
+              <option value="4" selected>4x / settimana</option>
+              <option value="5">5x / settimana</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="input-group">
+          <label class="label">Intensità generale</label>
+          <div class="option-group" id="mode-options">
+            <button class="option-btn" data-mode="easy">Conservativo</button>
+            <button class="option-btn active" data-mode="medium">Moderato</button>
+            <button class="option-btn" data-mode="hard">Aggressivo</button>
+          </div>
+        </div>
+        
+        <div class="input-group">
+          <label class="label">Kettlebell disponibili</label>
+          <div class="checkbox-wrap" id="half-checkbox">
+            <div class="checkbox-box" id="half-box"></div>
+            <div>
+              <div style="font-size: 0.85rem; font-weight: 500;">Mezze misure (2kg step)</div>
+              <div style="font-size: 0.75rem; color: var(--text-dim);">10, 14, 18, 22, 26, 30, 34, 38, 42 kg</div>
+            </div>
+          </div>
+          <div class="checkbox-wrap" id="magnetic-checkbox" style="margin-top: 8px;">
+            <div class="checkbox-box" id="magnetic-box"></div>
+            <div>
+              <div style="font-size: 0.85rem; font-weight: 500;">Dischi magnetici (+1kg)</div>
+              <div style="font-size: 0.75rem; color: var(--text-dim);">Es: 16→17, 20→21, 24→25 kg</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="button-row">
+        <button class="btn-secondary" id="back-to-exercise">← Indietro</button>
+        <button class="btn-primary" id="generate-btn">Genera Programma</button>
+      </div>
+    </div>
+    
+    <!-- Step 3: Results -->
+    <div id="step-results" class="hidden">
+      <div class="stats-grid" id="stats-grid"></div>
+      
+      <div class="projection-card" id="projection-card">
+        <div class="projection-title">Proiezione a fine programma</div>
+        <div class="projection-value" id="projected-1rm">—</div>
+        <div class="projection-detail">
+          Potenziale nuovo 1RM (<span id="projected-gain">+0%</span>)
+        </div>
+      </div>
+      
+      <!-- Coach Mode Toggle -->
+      <div class="coach-mode-toggle" id="coach-mode-toggle">
+        <div class="coach-mode-label">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 3v18h18"/>
+            <path d="M18 17V9M13 17V5M8 17v-3"/>
+          </svg>
+          <div>
+            <span>Modalità Coach</span><br>
+            <small>Analisi volume, intensità e periodizzazione</small>
+          </div>
+        </div>
+        <div class="toggle-switch"></div>
+      </div>
+      
+      <!-- Coach Analytics Section (hidden by default) -->
+      <div class="coach-analytics" id="coach-analytics">
+        <div class="analytics-card">
+          <h3 class="analytics-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 3v18h18"/>
+              <path d="M18 17V9M13 17V5M8 17v-3"/>
+            </svg>
+            Progressione del Programma
+          </h3>
+          
+          <div class="chart-container" id="chart-container"></div>
+          
+          <div class="chart-legend">
+            <div class="chart-legend-item">
+              <div class="chart-legend-dot volume"></div>
+              <span>Volume (kg)</span>
+            </div>
+            <div class="chart-legend-item">
+              <div class="chart-legend-dot intensity"></div>
+              <span>Intensità (%)</span>
+            </div>
+          </div>
+          
+          <div class="volume-summary" id="volume-summary"></div>
+        </div>
+        
+        <div class="analytics-card">
+          <h3 class="analytics-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="4" width="18" height="18" rx="2"/>
+              <path d="M3 10h18M9 4v18"/>
+            </svg>
+            Volume Settimanale
+          </h3>
+          <div class="weekly-volumes" id="weekly-volumes"></div>
+        </div>
+      </div>
+      
+      <div class="edit-mode-banner">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/>
+          <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/>
+        </svg>
+        <span>Clicca su qualsiasi valore per modificarlo. Potrai propagare le modifiche alle settimane successive.</span>
+      </div>
+      
+      <div class="actions-bar">
+        <button class="btn-secondary btn-icon" id="export-pdf-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+            <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/>
+          </svg>
+          PDF
+        </button>
+        <button class="btn-secondary btn-icon" id="export-excel-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="18" height="18" rx="2"/>
+            <path d="M3 9h18M3 15h18M9 3v18M15 3v18"/>
+          </svg>
+          Excel
+        </button>
+        <button class="btn-secondary btn-icon" id="export-ig-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="2" width="20" height="20" rx="5"/>
+            <circle cx="12" cy="12" r="4"/>
+          </svg>
+          Instagram
+        </button>
+        <button class="btn-secondary btn-icon" id="reset-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 12a9 9 0 109-9 9.75 9.75 0 00-6.74 2.74L3 8"/>
+            <path d="M3 3v5h5"/>
+          </svg>
+          Nuovo
+        </button>
+      </div>
+      
+      <!-- Export Options (shown when coach mode is active) -->
+      <div class="export-options" id="export-options">
+        <label class="export-option">
+          <input type="checkbox" id="include-analytics" checked>
+          <div class="export-option-box"></div>
+          <span>Includi analisi volume e grafico nel PDF/Excel</span>
+        </label>
+      </div>
+      
+      <div class="week-nav-container" id="week-nav-container">
+        <div class="week-nav" id="week-nav"></div>
+        <div class="swipe-hint">← Swipe per navigare le settimane →</div>
+      </div>
+      <div id="program-content"></div>
+    </div>
+    
+    <footer class="footer">
+      <p class="footer-text">
+        <span class="footer-brand">nicholasrubini.it</span>
+        <span style="margin: 0 12px;">•</span>
+        <span>Train Like a Viking</span>
+        <span style="margin: 0 12px;">•</span>
+        <span>v5.0-MEGIN</span>
+      </p>
+    </footer>
+  </div>
+  
+  <div id="propagate-popover" class="propagate-popover hidden"></div>
+  
+  <div class="modal-overlay hidden" id="ig-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title">Card Instagram Stories</h3>
+        <button class="modal-close" id="ig-modal-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="ig-preview">
+          <div style="font-size: 10px; text-transform: uppercase; letter-spacing: 3px; color: var(--gold); margin-bottom: 4px;">MEGINGJÖRÐ</div>
+          <div class="ig-preview-title" id="ig-exercise-title">KETTLEBELL SNATCH</div>
+          <div class="ig-preview-subtitle">Raddoppia la tua forza</div>
+          <div class="ig-stats">
+            <div class="ig-stat">
+              <div class="ig-stat-value" id="ig-1rm">32kg</div>
+              <div class="ig-stat-label">1RM Attuale</div>
+            </div>
+            <div class="ig-stat">
+              <div class="ig-stat-value" id="ig-target">34kg</div>
+              <div class="ig-stat-label">Target</div>
+            </div>
+            <div class="ig-stat">
+              <div class="ig-stat-value" id="ig-weeks">8</div>
+              <div class="ig-stat-label">Settimane</div>
+            </div>
+            <div class="ig-stat">
+              <div class="ig-stat-value" id="ig-freq">4x</div>
+              <div class="ig-stat-label">Frequenza</div>
+            </div>
+          </div>
+          <div class="ig-brand">nicholasrubini.it • Train Like a Viking</div>
+        </div>
+        <button class="btn-primary" id="download-ig-btn">Scarica Immagine</button>
+      </div>
+    </div>
+  </div>
+  
+  <canvas id="ig-canvas" width="1080" height="1920"></canvas>
+
+  <script>
+    // Exercise configurations
+    const exerciseConfigs = {
+      snatch: { name: 'Snatch', displayName: 'KETTLEBELL SNATCH', rune: 'ᛟ', repModifier: 0, restModifier: 0, baseClusterReps: 2, note: 'Presa attiva, timing del punch' },
+      cleanAndJerk: { name: 'Clean & Jerk', displayName: 'KETTLEBELL CLEAN & JERK', rune: 'ᚱ', repModifier: -1, restModifier: 20, baseClusterReps: 2, note: 'Timing del dip, lockout completo' },
+      press: { name: 'Press', displayName: 'KETTLEBELL PRESS', rune: 'ᛉ', repModifier: 2, restModifier: -15, baseClusterReps: 3, note: 'Tensione totale, lat engagement' },
+      cleanAndPress: { name: 'Clean & Press', displayName: 'KETTLEBELL CLEAN & PRESS', rune: 'ᚹ', repModifier: 0, restModifier: 0, baseClusterReps: 2, note: 'Transizione fluida rack→press' }
+    };
+    
+    const deloadConfigs = {
+      easy: { intensityDrop: -8, volumeMultiplier: 0.75, rpeReduction: 1 },
+      medium: { intensityDrop: -10, volumeMultiplier: 0.65, rpeReduction: 2 },
+      hard: { intensityDrop: -12, volumeMultiplier: 0.55, rpeReduction: 2 }
+    };
+    
+    // === localStorage PERSISTENCE ===
+    const STORAGE_KEY = 'megingjord-program';
+    
+    function saveToStorage() {
+      if (!program) return;
+      const data = {
+        program,
+        currentWeek,
+        selectedExercise,
+        mode,
+        halfMeasures,
+        magneticPlates,
+        coachMode,
+        savedAt: new Date().toISOString()
+      };
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      } catch (e) {
+        console.warn('localStorage save failed:', e);
+      }
+    }
+    
+    function loadFromStorage() {
+      try {
+        const data = localStorage.getItem(STORAGE_KEY);
+        if (!data) return null;
+        return JSON.parse(data);
+      } catch (e) {
+        console.warn('localStorage load failed:', e);
+        return null;
+      }
+    }
+    
+    function clearStorage() {
+      try {
+        localStorage.removeItem(STORAGE_KEY);
+      } catch (e) {
+        console.warn('localStorage clear failed:', e);
+      }
+    }
+    
+    // State
+    let selectedExercise = null;
+    let mode = 'medium';
+    let halfMeasures = false;
+    let magneticPlates = false;
+    let program = null;
+    let currentWeek = 1;
+    let pendingEdit = null;
+    let coachMode = false;
+    
+    const standardKB = [12, 16, 20, 24, 28, 32, 36, 40, 44, 48];
+    const halfMeasuresKB = [10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 48];
+    
+    function getAvailableKB() {
+      let base = halfMeasures ? halfMeasuresKB : standardKB;
+      if (magneticPlates) {
+        // Add +1kg for each KB
+        const withMagnetic = new Set(base);
+        base.forEach(kb => withMagnetic.add(kb + 1));
+        return [...withMagnetic].sort((a, b) => a - b);
+      }
+      return base;
+    }
+    
+    const dayTypes = {
+      HEAVY: { label: 'HEAVY', badgeClass: 'badge-red', rpe: '8-9', intensityRange: [88, 95] },
+      CLUSTER: { label: 'CLUSTER', badgeClass: 'badge-purple', rpe: '8', intensityRange: [83, 90] },
+      MEDIUM: { label: 'MEDIUM', badgeClass: 'badge-orange', rpe: '7-8', intensityRange: [75, 82] },
+      LIGHT: { label: 'LIGHT', badgeClass: 'badge-green', rpe: '6-7', intensityRange: [65, 72] },
+      VOLUME: { label: 'VOLUME', badgeClass: 'badge-ice', rpe: '7', intensityRange: [70, 78] }
+    };
+    
+    // DOM Elements
+    const stepExercise = document.getElementById('step-exercise');
+    const stepConfig = document.getElementById('step-config');
+    const stepResults = document.getElementById('step-results');
+    const exerciseCards = document.querySelectorAll('.exercise-card');
+    const nextToConfigBtn = document.getElementById('next-to-config');
+    const backToExerciseBtn = document.getElementById('back-to-exercise');
+    const errorEl = document.getElementById('error');
+    const modeOptions = document.querySelectorAll('.option-btn[data-mode]');
+    const halfCheckbox = document.getElementById('half-checkbox');
+    const halfBox = document.getElementById('half-box');
+    const magneticCheckbox = document.getElementById('magnetic-checkbox');
+    const magneticBox = document.getElementById('magnetic-box');
+    const generateBtn = document.getElementById('generate-btn');
+    const resetBtn = document.getElementById('reset-btn');
+    const exportPdfBtn = document.getElementById('export-pdf-btn');
+    const exportExcelBtn = document.getElementById('export-excel-btn');
+    const exportIgBtn = document.getElementById('export-ig-btn');
+    const igModal = document.getElementById('ig-modal');
+    const igModalClose = document.getElementById('ig-modal-close');
+    const downloadIgBtn = document.getElementById('download-ig-btn');
+    const rmEstimates = document.getElementById('rm-estimates');
+    const propagatePopover = document.getElementById('propagate-popover');
+    const coachModeToggle = document.getElementById('coach-mode-toggle');
+    const coachAnalytics = document.getElementById('coach-analytics');
+    const exportOptions = document.getElementById('export-options');
+    
+    // === VOLUME CALCULATION FUNCTIONS ===
+    function calcPrescriptionVolume(p) {
+      return p.sets * p.reps * p.weight;
+    }
+    
+    function calcDayVolume(day) {
+      return day.prescriptions.reduce((sum, p) => sum + calcPrescriptionVolume(p), 0);
+    }
+    
+    function calcWeekVolume(week) {
+      return week.days.reduce((sum, day) => sum + calcDayVolume(day), 0);
+    }
+    
+    function calcWeekAvgIntensity(week, workingMax) {
+      let totalWeight = 0;
+      let count = 0;
+      week.days.forEach(day => {
+        day.prescriptions.forEach(p => {
+          totalWeight += p.weight;
+          count++;
+        });
+      });
+      return count > 0 ? (totalWeight / count / workingMax * 100) : 0;
+    }
+    
+    function formatVolume(kg) {
+      if (kg >= 1000) {
+        return (kg / 1000).toFixed(1) + 't';
+      }
+      return kg + 'kg';
+    }
+    
+    // === SVG CHART GENERATION ===
+    function renderProgressionChart() {
+      if (!program) return;
+      
+      const container = document.getElementById('chart-container');
+      const weeks = program.weeks;
+      const volumes = weeks.map(w => calcWeekVolume(w));
+      const intensities = weeks.map(w => calcWeekAvgIntensity(w, program.workingMax));
+      
+      const maxVolume = Math.max(...volumes) * 1.1;
+      const minVolume = Math.min(...volumes) * 0.9;
+      const maxIntensity = Math.max(...intensities) * 1.05;
+      const minIntensity = Math.min(...intensities) * 0.95;
+      
+      const width = 100;
+      const height = 100;
+      const padding = { top: 10, right: 15, bottom: 15, left: 10 };
+      const chartWidth = width - padding.left - padding.right;
+      const chartHeight = height - padding.top - padding.bottom;
+      
+      // Create points for volume line
+      const volumePoints = volumes.map((v, i) => {
+        const x = padding.left + (i / (weeks.length - 1)) * chartWidth;
+        const y = padding.top + chartHeight - ((v - minVolume) / (maxVolume - minVolume)) * chartHeight;
+        return `${x},${y}`;
+      }).join(' ');
+      
+      // Create points for intensity line
+      const intensityPoints = intensities.map((v, i) => {
+        const x = padding.left + (i / (weeks.length - 1)) * chartWidth;
+        const y = padding.top + chartHeight - ((v - minIntensity) / (maxIntensity - minIntensity)) * chartHeight;
+        return `${x},${y}`;
+      }).join(' ');
+      
+      // Create area under volume line
+      const volumeArea = `${padding.left},${padding.top + chartHeight} ${volumePoints} ${padding.left + chartWidth},${padding.top + chartHeight}`;
+      
+      // Week labels
+      let weekLabels = '';
+      weeks.forEach((w, i) => {
+        const x = padding.left + (i / (weeks.length - 1)) * chartWidth;
+        weekLabels += `<text x="${x}" y="${height - 2}" text-anchor="middle" fill="#6b6862" font-size="3">${w.week}</text>`;
+      });
+      
+      // Data points for volume
+      let volumeDots = '';
+      volumes.forEach((v, i) => {
+        const x = padding.left + (i / (weeks.length - 1)) * chartWidth;
+        const y = padding.top + chartHeight - ((v - minVolume) / (maxVolume - minVolume)) * chartHeight;
+        const isDeload = weeks[i].isDeload;
+        volumeDots += `<circle cx="${x}" cy="${y}" r="2" fill="${isDeload ? '#4ade80' : '#7FB3D5'}" stroke="#0a0a0c" stroke-width="0.5"/>`;
+      });
+      
+      // Data points for intensity
+      let intensityDots = '';
+      intensities.forEach((v, i) => {
+        const x = padding.left + (i / (weeks.length - 1)) * chartWidth;
+        const y = padding.top + chartHeight - ((v - minIntensity) / (maxIntensity - minIntensity)) * chartHeight;
+        intensityDots += `<circle cx="${x}" cy="${y}" r="1.5" fill="#c9a227" stroke="#0a0a0c" stroke-width="0.5"/>`;
+      });
+      
+      container.innerHTML = `
+        <svg viewBox="0 0 ${width} ${height}" preserveAspectRatio="xMidYMid meet">
+          <!-- Grid lines -->
+          <line x1="${padding.left}" y1="${padding.top}" x2="${padding.left}" y2="${padding.top + chartHeight}" stroke="#1e1e24" stroke-width="0.5"/>
+          <line x1="${padding.left}" y1="${padding.top + chartHeight}" x2="${padding.left + chartWidth}" y2="${padding.top + chartHeight}" stroke="#1e1e24" stroke-width="0.5"/>
+          
+          <!-- Volume area fill -->
+          <polygon points="${volumeArea}" fill="rgba(127, 179, 213, 0.1)"/>
+          
+          <!-- Volume line -->
+          <polyline points="${volumePoints}" fill="none" stroke="#7FB3D5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          
+          <!-- Intensity line -->
+          <polyline points="${intensityPoints}" fill="none" stroke="#c9a227" stroke-width="1" stroke-dasharray="2,1" stroke-linecap="round" stroke-linejoin="round"/>
+          
+          <!-- Data points -->
+          ${volumeDots}
+          ${intensityDots}
+          
+          <!-- Week labels -->
+          ${weekLabels}
+        </svg>
+      `;
+    }
+    
+    function renderVolumeSummary() {
+      if (!program) return;
+      
+      const volumes = program.weeks.map(w => calcWeekVolume(w));
+      const totalVolume = volumes.reduce((a, b) => a + b, 0);
+      const avgVolume = totalVolume / volumes.length;
+      const peakVolume = Math.max(...volumes);
+      const peakWeek = volumes.indexOf(peakVolume) + 1;
+      
+      document.getElementById('volume-summary').innerHTML = `
+        <div class="volume-stat">
+          <div class="volume-stat-value">${formatVolume(totalVolume)}</div>
+          <div class="volume-stat-label">Volume Totale</div>
+        </div>
+        <div class="volume-stat">
+          <div class="volume-stat-value">${formatVolume(Math.round(avgVolume))}</div>
+          <div class="volume-stat-label">Media Settimanale</div>
+        </div>
+        <div class="volume-stat">
+          <div class="volume-stat-value">S${peakWeek}</div>
+          <div class="volume-stat-label">Picco Volume</div>
+        </div>
+      `;
+    }
+    
+    function renderWeeklyVolumes() {
+      if (!program) return;
+      
+      const volumes = program.weeks.map(w => calcWeekVolume(w));
+      
+      let html = '';
+      program.weeks.forEach((week, i) => {
+        const vol = volumes[i];
+        const prevVol = i > 0 ? volumes[i - 1] : vol;
+        const delta = i > 0 ? ((vol - prevVol) / prevVol * 100) : 0;
+        const deltaClass = delta >= 0 ? 'positive' : 'negative';
+        const deltaStr = i === 0 ? '—' : `${delta >= 0 ? '+' : ''}${delta.toFixed(0)}%`;
+        const deloadClass = week.isDeload ? 'deload' : '';
+        
+        html += `
+          <div class="weekly-volume-item ${deloadClass}">
+            <div class="weekly-volume-week">Sett. ${week.week}${week.isDeload ? ' ⟡' : ''}</div>
+            <div class="weekly-volume-value">${formatVolume(vol)}</div>
+            <div class="weekly-volume-delta ${deltaClass}">${deltaStr}</div>
+          </div>
+        `;
+      });
+      
+      document.getElementById('weekly-volumes').innerHTML = html;
+    }
+    
+    // === COACH MODE TOGGLE ===
+    coachModeToggle.addEventListener('click', () => {
+      coachMode = !coachMode;
+      coachModeToggle.classList.toggle('active', coachMode);
+      coachAnalytics.classList.toggle('visible', coachMode);
+      exportOptions.classList.toggle('visible', coachMode);
+      
+      if (coachMode) {
+        renderProgressionChart();
+        renderVolumeSummary();
+        renderWeeklyVolumes();
+      }
+      
+      // Re-render to show/hide volume badges
+      renderResults();
+    });
+    
+    function updateStepIndicators(step) {
+      document.getElementById('step-dot-1').classList.toggle('active', step === 1);
+      document.getElementById('step-dot-1').classList.toggle('completed', step > 1);
+      document.getElementById('step-dot-2').classList.toggle('active', step === 2);
+      document.getElementById('step-dot-2').classList.toggle('completed', step > 2);
+      document.getElementById('step-dot-3').classList.toggle('active', step === 3);
+    }
+    
+    exerciseCards.forEach(card => {
+      card.addEventListener('click', () => {
+        exerciseCards.forEach(c => c.classList.remove('selected'));
+        card.classList.add('selected');
+        selectedExercise = card.dataset.exercise;
+        nextToConfigBtn.disabled = false;
+      });
+    });
+    
+    nextToConfigBtn.addEventListener('click', () => {
+      if (!selectedExercise) return;
+      stepExercise.classList.add('hidden');
+      stepConfig.classList.remove('hidden');
+      document.getElementById('selected-exercise-name').textContent = exerciseConfigs[selectedExercise].name;
+      updateStepIndicators(2);
+    });
+    
+    backToExerciseBtn.addEventListener('click', () => {
+      stepConfig.classList.add('hidden');
+      stepExercise.classList.remove('hidden');
+      updateStepIndicators(1);
+    });
+    
+    function estimateFromRM(knownRM, knownReps, targetReps) {
+      const oneRM = knownRM * (1 + knownReps / 30);
+      return oneRM / (1 + targetReps / 30);
+    }
+    
+    function updateRMEstimates() {
+      const oneRM = parseFloat(document.getElementById('oneRM').value);
+      const fiveRM = parseFloat(document.getElementById('fiveRM').value);
+      const tenRM = parseFloat(document.getElementById('tenRM').value);
+      
+      let est1RM, est5RM, est10RM;
+      
+      if (oneRM) { est1RM = oneRM; est5RM = estimateFromRM(oneRM, 1, 5); est10RM = estimateFromRM(oneRM, 1, 10); }
+      else if (fiveRM) { est1RM = fiveRM * (1 + 5/30); est5RM = fiveRM; est10RM = estimateFromRM(fiveRM, 5, 10); }
+      else if (tenRM) { est1RM = tenRM * (1 + 10/30); est5RM = estimateFromRM(tenRM, 10, 5); est10RM = tenRM; }
+      else { rmEstimates.classList.remove('visible'); return; }
+      
+      document.getElementById('est-1rm').textContent = Math.round(est1RM) + 'kg';
+      document.getElementById('est-5rm').textContent = Math.round(est5RM) + 'kg';
+      document.getElementById('est-10rm').textContent = Math.round(est10RM) + 'kg';
+      rmEstimates.classList.add('visible');
+    }
+    
+    ['oneRM', 'fiveRM', 'tenRM'].forEach(id => {
+      document.getElementById(id).addEventListener('input', (e) => {
+        const inputs = ['oneRM', 'fiveRM', 'tenRM'].filter(i => i !== id);
+        if (e.target.value) inputs.forEach(i => document.getElementById(i).value = '');
+        updateRMEstimates();
+        validateRMInput(id, e.target.value);
+      });
+    });
+    
+    function validateRMInput(id, value) {
+      const input = document.getElementById(id);
+      const hint = document.getElementById(id + '-hint');
+      const numValue = parseFloat(value);
+      
+      // Reset state
+      input.classList.remove('input-error', 'input-warning');
+      hint.classList.remove('visible', 'error', 'warning');
+      hint.textContent = '';
+      
+      if (!value) return;
+      
+      // Calculate estimated 1RM based on which field was filled
+      let estimated1RM = numValue;
+      if (id === 'fiveRM') estimated1RM = numValue * (1 + 5/30);
+      if (id === 'tenRM') estimated1RM = numValue * (1 + 10/30);
+      
+      // Error: invalid value
+      if (isNaN(numValue) || numValue <= 0) {
+        input.classList.add('input-error');
+        hint.classList.add('visible', 'error');
+        hint.textContent = 'Inserisci un valore valido';
+        return;
+      }
+      
+      // Error: too low
+      if (numValue < 8) {
+        input.classList.add('input-error');
+        hint.classList.add('visible', 'error');
+        hint.textContent = 'Il kettlebell minimo è 8kg';
+        return;
+      }
+      
+      // Warning: exceeds standard KB range
+      if (estimated1RM > 48) {
+        input.classList.add('input-warning');
+        hint.classList.add('visible', 'warning');
+        hint.textContent = '⚠️ Supera il KB standard (48kg)';
+        return;
+      }
+    }
+    
+    modeOptions.forEach(btn => {
+      btn.addEventListener('click', () => {
+        modeOptions.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        mode = btn.dataset.mode;
+      });
+    });
+    
+    halfCheckbox.addEventListener('click', () => {
+      halfMeasures = !halfMeasures;
+      halfBox.classList.toggle('checked', halfMeasures);
+      halfBox.innerHTML = halfMeasures ? '<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#0a0a0c" stroke-width="2" stroke-linecap="round"/></svg>' : '';
+    });
+    
+    magneticCheckbox.addEventListener('click', () => {
+      magneticPlates = !magneticPlates;
+      magneticBox.classList.toggle('checked', magneticPlates);
+      magneticBox.innerHTML = magneticPlates ? '<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#0a0a0c" stroke-width="2" stroke-linecap="round"/></svg>' : '';
+    });
+    
+    function roundToKB(weight) {
+      const kbArray = getAvailableKB();
+      let closest = kbArray[0];
+      let minDiff = Math.abs(weight - closest);
+      for (const kb of kbArray) {
+        const diff = Math.abs(weight - kb);
+        if (diff < minDiff) { minDiff = diff; closest = kb; }
+      }
+      return closest;
+    }
+    
+    function getKBBelow(weight) {
+      const kbArray = getAvailableKB();
+      let result = kbArray[0];
+      for (const kb of kbArray) { if (kb <= weight) result = kb; else break; }
+      return result;
+    }
+    
+    function getKBAbove(weight) {
+      const kbArray = getAvailableKB();
+      for (const kb of kbArray) { if (kb >= weight) return kb; }
+      return kbArray[kbArray.length - 1];
+    }
+    
+    function calculateWorkingMax() {
+      const oneRM = parseFloat(document.getElementById('oneRM').value);
+      const fiveRM = parseFloat(document.getElementById('fiveRM').value);
+      const tenRM = parseFloat(document.getElementById('tenRM').value);
+      if (oneRM) return oneRM;
+      if (fiveRM) return fiveRM * (1 + 5/30);
+      if (tenRM) return tenRM * (1 + 10/30);
+      return 0;
+    }
+    
+    function applyRepModifier(baseReps, modifier) {
+      return typeof baseReps === 'number' ? Math.max(1, baseReps + modifier) : baseReps;
+    }
+    
+    function getClusterReps(baseReps, weekNumber, totalWeeks) {
+      const progress = weekNumber / totalWeeks;
+      if (progress < 0.3) return baseReps;
+      else if (progress < 0.7) return baseReps + 1;
+      else return baseReps;
+    }
+    
+    function applyDeloadToSets(sets, volumeMultiplier) {
+      return Math.max(2, Math.round(sets * volumeMultiplier));
+    }
+    
+    // === NEW PROGRESSION SYSTEM ===
+    // Phases: Accumulation (weeks 1-40%), Intensification (40-80%), Peak (80-100%)
+    function getPhaseInfo(weekNumber, totalWeeks) {
+      const progress = (weekNumber - 1) / Math.max(1, totalWeeks - 1);
+      
+      if (progress < 0.4) {
+        return { phase: 'accumulation', phaseProgress: progress / 0.4 };
+      } else if (progress < 0.8) {
+        return { phase: 'intensification', phaseProgress: (progress - 0.4) / 0.4 };
+      } else {
+        return { phase: 'peak', phaseProgress: (progress - 0.8) / 0.2 };
+      }
+    }
+    
+    // Progressive sets/reps based on phase and week
+    function getProgressiveSetsReps(dayType, phase, phaseProgress, weekNumber, totalWeeks) {
+      // Base structures that EVOLVE over time
+      const progressions = {
+        HEAVY: {
+          accumulation: [
+            // Early: more volume, moderate intensity work
+            { warmup: { sets: 3, reps: 3 }, mid: { sets: 3, reps: 2 }, heavy: { sets: 3, reps: 1 }, peak: null },
+            { warmup: { sets: 3, reps: 3 }, mid: { sets: 3, reps: 2 }, heavy: { sets: 4, reps: 1 }, peak: null },
+            { warmup: { sets: 3, reps: 3 }, mid: { sets: 4, reps: 2 }, heavy: { sets: 4, reps: 1 }, peak: null },
+          ],
+          intensification: [
+            // Mid: reps increase on heavy work
+            { warmup: { sets: 3, reps: 3 }, mid: { sets: 3, reps: 2 }, heavy: { sets: 3, reps: 2 }, peak: null },
+            { warmup: { sets: 3, reps: 3 }, mid: { sets: 3, reps: 2 }, heavy: { sets: 4, reps: 2 }, peak: null },
+            { warmup: { sets: 2, reps: 3 }, mid: { sets: 3, reps: 2 }, heavy: { sets: 4, reps: 2 }, peak: { sets: 2, reps: 1 } },
+          ],
+          peak: [
+            // Late: peak intensity, mixed rep schemes
+            { warmup: { sets: 2, reps: 3 }, mid: { sets: 2, reps: 2 }, heavy: { sets: 3, reps: 2 }, peak: { sets: 3, reps: 1 } },
+            { warmup: { sets: 2, reps: 3 }, mid: { sets: 2, reps: 2 }, heavy: { sets: 2, reps: 2 }, peak: { sets: 4, reps: 1 } },
+          ]
+        },
+        MEDIUM: {
+          accumulation: [
+            { low: { sets: 4, reps: 3 }, main: { sets: 3, reps: 3 }, top: { sets: 2, reps: 2 } },
+            { low: { sets: 4, reps: 3 }, main: { sets: 4, reps: 3 }, top: { sets: 2, reps: 2 } },
+            { low: { sets: 4, reps: 4 }, main: { sets: 4, reps: 3 }, top: { sets: 3, reps: 2 } },
+          ],
+          intensification: [
+            { low: { sets: 4, reps: 4 }, main: { sets: 4, reps: 3 }, top: { sets: 3, reps: 2 } },
+            { low: { sets: 3, reps: 4 }, main: { sets: 5, reps: 3 }, top: { sets: 3, reps: 2 } },
+            { low: { sets: 3, reps: 4 }, main: { sets: 5, reps: 3 }, top: { sets: 4, reps: 2 } },
+          ],
+          peak: [
+            { low: { sets: 3, reps: 3 }, main: { sets: 4, reps: 3 }, top: { sets: 4, reps: 2 } },
+            { low: { sets: 3, reps: 3 }, main: { sets: 4, reps: 2 }, top: { sets: 3, reps: 2 } },
+          ]
+        },
+        LIGHT: {
+          accumulation: [
+            { low: { sets: 4, reps: 5 }, main: { sets: 4, reps: 4 }, back: { sets: 3, reps: 3 } },
+            { low: { sets: 5, reps: 5 }, main: { sets: 4, reps: 4 }, back: { sets: 3, reps: 4 } },
+            { low: { sets: 5, reps: 5 }, main: { sets: 5, reps: 4 }, back: { sets: 4, reps: 4 } },
+          ],
+          intensification: [
+            { low: { sets: 5, reps: 5 }, main: { sets: 5, reps: 5 }, back: { sets: 4, reps: 4 } },
+            { low: { sets: 5, reps: 6 }, main: { sets: 5, reps: 5 }, back: { sets: 4, reps: 4 } },
+            { low: { sets: 4, reps: 6 }, main: { sets: 5, reps: 5 }, back: { sets: 5, reps: 4 } },
+          ],
+          peak: [
+            { low: { sets: 4, reps: 5 }, main: { sets: 4, reps: 5 }, back: { sets: 4, reps: 4 } },
+            { low: { sets: 4, reps: 5 }, main: { sets: 4, reps: 4 }, back: { sets: 3, reps: 4 } },
+          ]
+        },
+        CLUSTER: {
+          accumulation: [
+            { main: { sets: 5, reps: 2 }, secondary: null },
+            { main: { sets: 6, reps: 2 }, secondary: null },
+            { main: { sets: 6, reps: 2 }, secondary: { sets: 2, reps: 2 } },
+          ],
+          intensification: [
+            { main: { sets: 6, reps: 3 }, secondary: { sets: 2, reps: 2 } },
+            { main: { sets: 7, reps: 3 }, secondary: { sets: 2, reps: 2 } },
+            { main: { sets: 6, reps: 3 }, secondary: { sets: 3, reps: 3 } },
+          ],
+          peak: [
+            { main: { sets: 5, reps: 3 }, secondary: { sets: 3, reps: 2 } },
+            { main: { sets: 5, reps: 2 }, secondary: { sets: 3, reps: 2 } },
+          ]
+        },
+        VOLUME: {
+          accumulation: [
+            { low: { sets: 5, reps: 4 }, main: { sets: 4, reps: 3 }, back: { sets: 3, reps: 5 } },
+            { low: { sets: 5, reps: 4 }, main: { sets: 5, reps: 3 }, back: { sets: 4, reps: 5 } },
+            { low: { sets: 6, reps: 4 }, main: { sets: 5, reps: 4 }, back: { sets: 4, reps: 5 } },
+          ],
+          intensification: [
+            { low: { sets: 6, reps: 4 }, main: { sets: 6, reps: 4 }, back: { sets: 4, reps: 5 } },
+            { low: { sets: 6, reps: 5 }, main: { sets: 6, reps: 4 }, back: { sets: 5, reps: 5 } },
+            { low: { sets: 5, reps: 5 }, main: { sets: 6, reps: 4 }, back: { sets: 5, reps: 6 } },
+          ],
+          peak: [
+            { low: { sets: 5, reps: 4 }, main: { sets: 5, reps: 4 }, back: { sets: 4, reps: 5 } },
+            { low: { sets: 4, reps: 4 }, main: { sets: 5, reps: 3 }, back: { sets: 4, reps: 4 } },
+          ]
+        }
+      };
+      
+      const phaseData = progressions[dayType][phase];
+      // Select which progression step based on phaseProgress
+      const stepIndex = Math.min(Math.floor(phaseProgress * phaseData.length), phaseData.length - 1);
+      return phaseData[stepIndex];
+    }
+    
+    function generateDayPrescriptions(dayType, workingMax, weekIntensityMod, isDeload, deloadConfig, weekNumber, totalWeeks, dayCap) {
+      const prescriptions = [];
+      const type = dayTypes[dayType];
+      const exConfig = exerciseConfigs[selectedExercise];
+      
+      // Get phase information
+      const { phase, phaseProgress } = getPhaseInfo(weekNumber, totalWeeks);
+      
+      // Calculate intensity
+      let baseIntensity = (type.intensityRange[0] + type.intensityRange[1]) / 2 + weekIntensityMod;
+      if (isDeload) baseIntensity += deloadConfig.intensityDrop;
+      
+      // Get progressive sets/reps for this week
+      const prog = getProgressiveSetsReps(dayType, phase, phaseProgress, weekNumber, totalWeeks);
+      
+      switch(dayType) {
+        case 'HEAVY':
+          const heavyWeight = roundToKB(workingMax * (baseIntensity / 100));
+          const heavyMid = getKBBelow(heavyWeight * 0.9);
+          const heavyWarmup = getKBBelow(heavyWeight * 0.75);
+          
+          let hWarmup = { ...prog.warmup };
+          let hMid = { ...prog.mid };
+          let hHeavy = { ...prog.heavy };
+          let hPeak = prog.peak ? { ...prog.peak } : null;
+          
+          if (isDeload) {
+            hWarmup.sets = applyDeloadToSets(hWarmup.sets, deloadConfig.volumeMultiplier);
+            hMid.sets = applyDeloadToSets(hMid.sets, deloadConfig.volumeMultiplier);
+            hHeavy.sets = applyDeloadToSets(hHeavy.sets, deloadConfig.volumeMultiplier);
+            hPeak = null; // No peak work on deload
+          }
+          
+          prescriptions.push({ sets: hWarmup.sets, reps: applyRepModifier(hWarmup.reps, exConfig.repModifier), weight: heavyWarmup, rest: '2min' });
+          prescriptions.push({ sets: hMid.sets, reps: applyRepModifier(hMid.reps, exConfig.repModifier), weight: heavyMid, rest: '2-3min' });
+          prescriptions.push({ sets: hHeavy.sets, reps: applyRepModifier(hHeavy.reps, Math.floor(exConfig.repModifier/2)), weight: heavyWeight, rest: '3min' });
+          
+          if (hPeak) {
+            const peakWeight = getKBAbove(heavyWeight);
+            if (peakWeight > heavyWeight) {
+              prescriptions.push({ sets: hPeak.sets, reps: hPeak.reps, weight: peakWeight, rest: '3-4min' });
+            }
+          }
+          break;
+          
+        case 'CLUSTER':
+          const clusterWeight = roundToKB(workingMax * (baseIntensity / 100));
+          const clusterSecondary = getKBAbove(clusterWeight);
+          
+          let cMain = { ...prog.main };
+          let cSecondary = prog.secondary ? { ...prog.secondary } : null;
+          
+          if (isDeload) {
+            cMain.sets = applyDeloadToSets(cMain.sets, deloadConfig.volumeMultiplier);
+            cMain.reps = Math.max(2, cMain.reps - 1);
+            cSecondary = null;
+          }
+          
+          prescriptions.push({ sets: cMain.sets, reps: cMain.reps, weight: clusterWeight, rest: '2min + 20s intra', isCluster: true });
+          
+          if (cSecondary && clusterSecondary > clusterWeight) {
+            prescriptions.push({ sets: cSecondary.sets, reps: cSecondary.reps, weight: clusterSecondary, rest: '2min + 20s intra', isCluster: true });
+          }
+          break;
+          
+        case 'MEDIUM':
+          const medWeight = roundToKB(workingMax * (baseIntensity / 100));
+          const medLow = getKBBelow(medWeight * 0.88);
+          
+          let mLow = { ...prog.low };
+          let mMain = { ...prog.main };
+          let mTop = { ...prog.top };
+          
+          if (isDeload) {
+            mLow.sets = applyDeloadToSets(mLow.sets, deloadConfig.volumeMultiplier);
+            mMain.sets = applyDeloadToSets(mMain.sets, deloadConfig.volumeMultiplier);
+            mTop.sets = applyDeloadToSets(mTop.sets, deloadConfig.volumeMultiplier);
+          }
+          
+          prescriptions.push({ sets: mLow.sets, reps: applyRepModifier(mLow.reps, exConfig.repModifier), weight: medLow, rest: '2-3min' });
+          prescriptions.push({ sets: mMain.sets, reps: applyRepModifier(mMain.reps, exConfig.repModifier), weight: medWeight, rest: '2-3min' });
+          prescriptions.push({ sets: mTop.sets, reps: applyRepModifier(mTop.reps, exConfig.repModifier), weight: medWeight, rest: '2-3min' });
+          break;
+          
+        case 'LIGHT':
+          const lightWeight = roundToKB(workingMax * (baseIntensity / 100));
+          const lightLow = getKBBelow(lightWeight * 0.85);
+          
+          let lLow = { ...prog.low };
+          let lMain = { ...prog.main };
+          let lBack = { ...prog.back };
+          
+          if (isDeload) {
+            lLow.sets = applyDeloadToSets(lLow.sets, deloadConfig.volumeMultiplier);
+            lMain.sets = applyDeloadToSets(lMain.sets, deloadConfig.volumeMultiplier);
+            lBack.sets = applyDeloadToSets(lBack.sets, deloadConfig.volumeMultiplier);
+          }
+          
+          prescriptions.push({ sets: lLow.sets, reps: applyRepModifier(lLow.reps, exConfig.repModifier), weight: lightLow, rest: '90-120s' });
+          prescriptions.push({ sets: lMain.sets, reps: applyRepModifier(lMain.reps, exConfig.repModifier), weight: lightWeight, rest: '90-120s' });
+          prescriptions.push({ sets: lBack.sets, reps: applyRepModifier(lBack.reps, exConfig.repModifier), weight: lightWeight, rest: '90-120s' });
+          break;
+          
+        case 'VOLUME':
+          const volWeight = roundToKB(workingMax * (baseIntensity / 100));
+          const volLow = getKBBelow(volWeight * 0.9);
+          
+          let vLow = { ...prog.low };
+          let vMain = { ...prog.main };
+          let vBack = { ...prog.back };
+          
+          if (isDeload) {
+            vLow.sets = applyDeloadToSets(vLow.sets, deloadConfig.volumeMultiplier);
+            vMain.sets = applyDeloadToSets(vMain.sets, deloadConfig.volumeMultiplier);
+            vBack.sets = applyDeloadToSets(vBack.sets, deloadConfig.volumeMultiplier);
+          }
+          
+          prescriptions.push({ sets: vLow.sets, reps: applyRepModifier(vLow.reps, exConfig.repModifier), weight: volLow, rest: '90s' });
+          prescriptions.push({ sets: vMain.sets, reps: applyRepModifier(vMain.reps, exConfig.repModifier), weight: volWeight, rest: '2min' });
+          prescriptions.push({ sets: vBack.sets, reps: applyRepModifier(vBack.reps, exConfig.repModifier), weight: volLow, rest: '90s' });
+          break;
+      }
+      
+      // Consolidate rows with same weight AND same reps
+      const consolidated = consolidatePrescriptions(prescriptions);
+      
+      // Apply sets CAP
+      return applySetsCap(consolidated, dayCap);
+    }
+    
+    function applySetsCap(prescriptions, cap) {
+      const totalSets = prescriptions.reduce((sum, p) => sum + p.sets, 0);
+      
+      if (totalSets <= cap) return prescriptions;
+      
+      // Need to reduce - calculate ratio
+      const ratio = cap / totalSets;
+      
+      // Apply proportional reduction, minimum 1 set per row
+      let remaining = cap;
+      const result = prescriptions.map((p, i) => {
+        if (i === prescriptions.length - 1) {
+          // Last row gets remaining sets
+          return { ...p, sets: Math.max(1, remaining) };
+        }
+        const newSets = Math.max(1, Math.round(p.sets * ratio));
+        remaining -= newSets;
+        return { ...p, sets: newSets };
+      });
+      
+      return result;
+    }
+    
+    function consolidatePrescriptions(prescriptions) {
+      const consolidated = [];
+      for (const p of prescriptions) {
+        // Find existing row with same weight, reps, and cluster status
+        const existing = consolidated.find(c => 
+          c.weight === p.weight && 
+          c.reps === p.reps && 
+          c.isCluster === p.isCluster
+        );
+        
+        if (existing) {
+          // Merge: add sets together, keep longer rest
+          existing.sets += p.sets;
+          // Keep the longer rest time (simple heuristic: longer string or higher number)
+          if (p.rest && (!existing.rest || p.rest.length > existing.rest.length)) {
+            existing.rest = p.rest;
+          }
+        } else {
+          consolidated.push({...p});
+        }
+      }
+      return consolidated;
+    }
+    
+    generateBtn.addEventListener('click', () => {
+      const oneRM = document.getElementById('oneRM').value;
+      const fiveRM = document.getElementById('fiveRM').value;
+      const tenRM = document.getElementById('tenRM').value;
+      
+      // Basic validation: at least one value required
+      if (!oneRM && !fiveRM && !tenRM) {
+        errorEl.textContent = 'Inserisci almeno un massimale';
+        errorEl.classList.remove('hidden');
+        return;
+      }
+      
+      // Get the entered value for validation
+      const enteredValue = parseFloat(oneRM) || parseFloat(fiveRM) || parseFloat(tenRM);
+      const valueType = oneRM ? '1RM' : fiveRM ? '5RM' : '10RM';
+      
+      // Validation: negative or zero
+      if (enteredValue <= 0) {
+        errorEl.textContent = 'Il valore deve essere maggiore di zero';
+        errorEl.classList.remove('hidden');
+        return;
+      }
+      
+      // Validation: unrealistically low (< 8kg)
+      if (enteredValue < 8) {
+        errorEl.textContent = 'Valore troppo basso. Il kettlebell minimo è 8kg';
+        errorEl.classList.remove('hidden');
+        return;
+      }
+      
+      // Calculate estimated 1RM for warnings
+      let estimated1RM = enteredValue;
+      if (fiveRM) estimated1RM = parseFloat(fiveRM) * (1 + 5/30);
+      if (tenRM) estimated1RM = parseFloat(tenRM) * (1 + 10/30);
+      
+      // Warning: value exceeds standard KB range
+      if (estimated1RM > 48) {
+        const proceed = confirm(
+          `⚠️ Attenzione: il tuo 1RM stimato (${Math.round(estimated1RM)}kg) supera il kettlebell standard più pesante (48kg).\n\n` +
+          `Assicurati di avere l'attrezzatura necessaria.\n\n` +
+          `Vuoi continuare comunque?`
+        );
+        if (!proceed) return;
+      }
+      
+      // Warning: short duration with aggressive mode
+      const duration = parseInt(document.getElementById('duration').value);
+      if (duration <= 5 && mode === 'hard') {
+        const proceed = confirm(
+          `⚠️ Attenzione: hai selezionato un programma corto (${duration} settimane) con modalità Aggressiva.\n\n` +
+          `Questa combinazione potrebbe essere troppo intensa per un adeguato recupero.\n\n` +
+          `Vuoi continuare comunque?`
+        );
+        if (!proceed) return;
+      }
+      
+      errorEl.classList.add('hidden');
+      generateBtn.textContent = 'Forgiando il programma...';
+      
+      setTimeout(() => {
+        const workingMax = calculateWorkingMax();
+        const duration = parseInt(document.getElementById('duration').value);
+        const frequency = parseInt(document.getElementById('frequency').value);
+        const exConfig = exerciseConfigs[selectedExercise];
+        const modeModifier = { easy: -3, medium: 0, hard: 3 }[mode];
+        const deloadConfig = deloadConfigs[mode];
+        
+        // CAP serie per tipo di giorno e modalità
+        const setsCap = {
+          easy:   { HEAVY: 6, CLUSTER: 5, MEDIUM: 7, LIGHT: 8, VOLUME: 8 },
+          medium: { HEAVY: 8, CLUSTER: 7, MEDIUM: 9, LIGHT: 10, VOLUME: 10 },
+          hard:   { HEAVY: 10, CLUSTER: 9, MEDIUM: 11, LIGHT: 12, VOLUME: 12 }
+        };
+        const currentCap = setsCap[mode];
+        
+        const dayRotations = { 
+          2: ['HEAVY', 'MEDIUM'],
+          3: ['HEAVY', 'MEDIUM', 'LIGHT'], 
+          4: ['HEAVY', 'MEDIUM', 'CLUSTER', 'LIGHT'], 
+          5: ['HEAVY', 'MEDIUM', 'CLUSTER', 'LIGHT', 'VOLUME'] 
+        };
+        const dayOrder = dayRotations[frequency];
+        const weeks = [];
+        
+        for (let w = 1; w <= duration; w++) {
+          const weekProgress = (w - 1) / (duration - 1);
+          
+          // Intensità base: sale fino all'80% del programma, poi plateau
+          let baseIntensityProgress;
+          if (weekProgress < 0.8) {
+            baseIntensityProgress = weekProgress / 0.8;
+          } else {
+            baseIntensityProgress = 1;
+          }
+          
+          // Ondulazione settimanale 3:1 - ogni 4a settimana è di scarico relativo
+          // Pattern: carico, carico, carico, scarico, carico, carico, carico, scarico...
+          const isLightWeek = (w % 4 === 0) && (w < duration); // Non ondulare l'ultima settimana (deload vero)
+          const undulationMod = isLightWeek ? -2 : 0;
+          
+          const weekIntensityMod = modeModifier + Math.round(baseIntensityProgress * 8) + undulationMod;
+          
+          const isDeload = w === duration;
+          const days = [];
+          
+          for (let d = 0; d < frequency; d++) {
+            const dayType = dayOrder[d];
+            const dayCap = isDeload ? Math.ceil(currentCap[dayType] * 0.6) : currentCap[dayType];
+            const prescriptions = generateDayPrescriptions(dayType, workingMax, weekIntensityMod, isDeload, deloadConfig, w, duration, dayCap);
+            const type = dayTypes[dayType];
+            const avgIntensity = prescriptions.reduce((sum, p) => sum + (p.weight / workingMax * 100), 0) / prescriptions.length;
+            
+            let rpe = type.rpe;
+            if (isDeload) {
+              const rpeBase = parseInt(type.rpe.split('-')[0]);
+              const rpeTop = parseInt(type.rpe.split('-')[1] || rpeBase);
+              rpe = `${Math.max(5, rpeBase - deloadConfig.rpeReduction)}-${Math.max(6, rpeTop - deloadConfig.rpeReduction)}`;
+            }
+            
+            days.push({
+              day: d + 1,
+              type: dayType,
+              typeConfig: type,
+              prescriptions: prescriptions.map(p => ({ ...p, modified: false })),
+              intensityRange: `${Math.round(avgIntensity - 5)}-${Math.round(avgIntensity + 5)}%`,
+              rpe: rpe,
+              note: exConfig.note
+            });
+          }
+          weeks.push({ week: w, isDeload, days, modified: false });
+        }
+        
+        const projectedGain = mode === 'easy' ? 5 : mode === 'medium' ? 8 : 12;
+        const projected1RM = roundToKB(workingMax * (1 + projectedGain / 100));
+        
+        program = { workingMax, duration, frequency, mode, weeks, projected1RM, projectedGain, exercise: selectedExercise, exerciseConfig: exConfig };
+        currentWeek = 1;
+        
+        // Save to localStorage
+        saveToStorage();
+        
+        // Reset coach mode when generating new program
+        coachMode = false;
+        coachModeToggle.classList.remove('active');
+        coachAnalytics.classList.remove('visible');
+        exportOptions.classList.remove('visible');
+        
+        renderResults();
+        stepConfig.classList.add('hidden');
+        stepResults.classList.remove('hidden');
+        updateStepIndicators(3);
+        generateBtn.textContent = 'Genera Programma';
+      }, 600);
+    });
+    
+    resetBtn.addEventListener('click', () => {
+      program = null;
+      selectedExercise = null;
+      clearStorage();
+      exerciseCards.forEach(c => c.classList.remove('selected'));
+      nextToConfigBtn.disabled = true;
+      stepResults.classList.add('hidden');
+      stepConfig.classList.add('hidden');
+      stepExercise.classList.remove('hidden');
+      document.getElementById('oneRM').value = '';
+      document.getElementById('fiveRM').value = '';
+      document.getElementById('tenRM').value = '';
+      rmEstimates.classList.remove('visible');
+      coachMode = false;
+      coachModeToggle.classList.remove('active');
+      coachAnalytics.classList.remove('visible');
+      exportOptions.classList.remove('visible');
+      updateStepIndicators(1);
+    });
+    
+    // === EDITING FUNCTIONALITY ===
+    function showToast(message, type = 'success') {
+      const existing = document.querySelector('.toast');
+      if (existing) existing.remove();
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      toast.textContent = message;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 3000);
+    }
+    
+    function hidePopover() {
+      propagatePopover.classList.add('hidden');
+      pendingEdit = null;
+    }
+    
+    function showPropagatePopover(element, weekIndex, dayIndex, prescIndex, field, oldValue, newValue) {
+      const rect = element.getBoundingClientRect();
+      const remainingWeeks = program.weeks.length - weekIndex - 1;
+      pendingEdit = { weekIndex, dayIndex, prescIndex, field, oldValue, newValue };
+      
+      propagatePopover.innerHTML = `
+        <div class="propagate-title">Applica modifica</div>
+        <div class="propagate-options">
+          <button class="propagate-btn" data-action="this">Solo questa settimana<small>Modifica solo Settimana ${weekIndex + 1}</small></button>
+          ${remainingWeeks > 0 ? `<button class="propagate-btn primary" data-action="future">Anche settimane successive<small>Applica a ${remainingWeeks} settiman${remainingWeeks > 1 ? 'e' : 'a'} rimanent${remainingWeeks > 1 ? 'i' : 'e'}</small></button>` : ''}
+          <button class="propagate-btn" data-action="cancel" style="color: var(--text-dim); border-color: transparent;">Annulla</button>
+        </div>
+      `;
+      
+      propagatePopover.style.top = `${rect.bottom + 10}px`;
+      propagatePopover.style.left = `${Math.min(rect.left, window.innerWidth - 300)}px`;
+      propagatePopover.classList.remove('hidden');
+      
+      propagatePopover.querySelectorAll('.propagate-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const action = btn.dataset.action;
+          if (action === 'cancel') {
+            program.weeks[weekIndex].days[dayIndex].prescriptions[prescIndex][field] = oldValue;
+          } else if (action === 'this') {
+            program.weeks[weekIndex].days[dayIndex].prescriptions[prescIndex].modified = true;
+            program.weeks[weekIndex].modified = true;
+            showToast('Modifica applicata');
+          } else if (action === 'future') {
+            program.weeks[weekIndex].days[dayIndex].prescriptions[prescIndex].modified = true;
+            program.weeks[weekIndex].modified = true;
+            for (let w = weekIndex + 1; w < program.weeks.length; w++) {
+              const targetDay = program.weeks[w].days[dayIndex];
+              if (targetDay && targetDay.prescriptions[prescIndex]) {
+                targetDay.prescriptions[prescIndex][field] = newValue;
+                targetDay.prescriptions[prescIndex].modified = true;
+                program.weeks[w].modified = true;
+              }
+            }
+            showToast(`Modifica applicata a ${program.weeks.length - weekIndex} settimane`);
+          }
+          hidePopover();
+          renderResults();
+          saveToStorage();
+          
+          // Update coach analytics if visible
+          if (coachMode) {
+            renderProgressionChart();
+            renderVolumeSummary();
+            renderWeeklyVolumes();
+          }
+        });
+      });
+    }
+    
+    function handleEditableClick(e) {
+      const cell = e.target.closest('.editable');
+      if (!cell || cell.classList.contains('editing')) return;
+      
+      const { week, day, presc, field } = cell.dataset;
+      const weekIndex = parseInt(week);
+      const dayIndex = parseInt(day);
+      const prescIndex = parseInt(presc);
+      const prescription = program.weeks[weekIndex].days[dayIndex].prescriptions[prescIndex];
+      const currentValue = prescription[field];
+      
+      cell.classList.add('editing');
+      const input = document.createElement('input');
+      input.type = field === 'rest' ? 'text' : 'number';
+      input.value = currentValue;
+      if (field === 'sets' || field === 'reps') input.min = 1;
+      if (field === 'weight') input.step = halfMeasures ? 2 : 4;
+      
+      cell.innerHTML = '';
+      cell.appendChild(input);
+      input.focus();
+      input.select();
+      
+      const finishEdit = () => {
+        let newValue = field === 'rest' ? input.value : parseFloat(input.value);
+        if (field !== 'rest' && (isNaN(newValue) || newValue < 1)) newValue = currentValue;
+        cell.classList.remove('editing');
+        if (newValue !== currentValue) {
+          prescription[field] = newValue;
+          showPropagatePopover(cell, weekIndex, dayIndex, prescIndex, field, currentValue, newValue);
+        }
+        renderResults();
+      };
+      
+      input.addEventListener('blur', finishEdit);
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') { e.preventDefault(); input.blur(); }
+        if (e.key === 'Escape') { prescription[field] = currentValue; cell.classList.remove('editing'); renderResults(); }
+      });
+    }
+    
+    document.addEventListener('click', (e) => {
+      if (!propagatePopover.contains(e.target) && !e.target.closest('.editable')) {
+        if (!propagatePopover.classList.contains('hidden') && pendingEdit) {
+          const { weekIndex, dayIndex, prescIndex, field, oldValue } = pendingEdit;
+          program.weeks[weekIndex].days[dayIndex].prescriptions[prescIndex][field] = oldValue;
+          hidePopover();
+          renderResults();
+        }
+      }
+    });
+    
+    function renderResults() {
+      const modeLabels = { easy: 'Conservativo', medium: 'Moderato', hard: 'Aggressivo' };
+      const exConfig = program.exerciseConfig;
+      
+      document.getElementById('stats-grid').innerHTML = `
+        <div class="stat-card"><div class="stat-value">${Math.round(program.workingMax)}kg</div><div class="stat-label">1RM ${exConfig.name}</div></div>
+        <div class="stat-card"><div class="stat-value">${program.duration}</div><div class="stat-label">Settimane</div></div>
+        <div class="stat-card"><div class="stat-value">${program.frequency}x</div><div class="stat-label">Frequenza</div></div>
+        <div class="stat-card"><div class="stat-value" style="font-size: 1rem;">${modeLabels[program.mode]}</div><div class="stat-label">Intensità</div></div>
+      `;
+      
+      document.getElementById('projected-1rm').textContent = program.projected1RM + 'kg';
+      document.getElementById('projected-gain').textContent = '+' + program.projectedGain + '%';
+      
+      let weekNavHTML = '';
+      program.weeks.forEach(w => {
+        const isActive = w.week === currentWeek;
+        const label = w.isDeload ? `S${w.week} (Deload)` : `Settimana ${w.week}`;
+        const modifiedClass = w.modified ? 'modified' : '';
+        weekNavHTML += `<button class="week-btn ${isActive ? 'active' : ''} ${modifiedClass}" data-week="${w.week}">${label}</button>`;
+      });
+      document.getElementById('week-nav').innerHTML = weekNavHTML;
+      
+      document.querySelectorAll('.week-btn').forEach(btn => {
+        btn.addEventListener('click', () => { currentWeek = parseInt(btn.dataset.week); renderResults(); });
+      });
+      
+      const weekIndex = currentWeek - 1;
+      const week = program.weeks[weekIndex];
+      let contentHTML = '';
+      
+      week.days.forEach((day, dayIndex) => {
+        let rowsHTML = '';
+        day.prescriptions.forEach((p, prescIndex) => {
+          const modifiedClass = p.modified ? 'modified' : '';
+          const clusterNote = p.isCluster ? ' <span style="color: var(--text-dim); font-size: 0.75rem;">(cluster)</span>' : '';
+          
+          rowsHTML += `
+            <tr>
+              <td>
+                <span class="editable ${modifiedClass}" data-week="${weekIndex}" data-day="${dayIndex}" data-presc="${prescIndex}" data-field="sets">${p.sets}</span>
+                x
+                <span class="editable ${modifiedClass}" data-week="${weekIndex}" data-day="${dayIndex}" data-presc="${prescIndex}" data-field="reps">${p.reps}</span>
+                ${clusterNote}
+              </td>
+              <td class="weight">
+                <span class="editable ${modifiedClass}" data-week="${weekIndex}" data-day="${dayIndex}" data-presc="${prescIndex}" data-field="weight">${p.weight}</span> kg
+              </td>
+              <td>
+                <span class="editable ${modifiedClass}" data-week="${weekIndex}" data-day="${dayIndex}" data-presc="${prescIndex}" data-field="rest">${p.rest}</span>
+              </td>
+            </tr>
+          `;
+        });
+        
+        const dayVolume = calcDayVolume(day);
+        const volumeBadgeClass = coachMode ? 'visible' : '';
+        
+        contentHTML += `
+          <div class="day-card">
+            <div class="day-header">
+              <div class="day-title">Giorno ${day.day}</div>
+              <div class="day-badges">
+                <span class="badge badge-gold">${day.intensityRange}</span>
+                <span class="badge ${day.typeConfig.badgeClass}">${day.typeConfig.label}</span>
+              </div>
+            </div>
+            <table class="day-table">
+              <thead><tr><th>Serie x Reps</th><th>Peso</th><th>Riposo</th></tr></thead>
+              <tbody>${rowsHTML}</tbody>
+            </table>
+            <div class="day-footer">
+              <span class="day-footer-left">RPE ${day.rpe}${day.prescriptions.some(p => p.isCluster) ? ' — Cluster: 20s riposo tra reps' : ''} — <em>${day.note}</em></span>
+              <span class="day-volume-badge ${volumeBadgeClass}">Vol: ${formatVolume(dayVolume)}</span>
+            </div>
+          </div>
+        `;
+      });
+      
+      document.getElementById('program-content').innerHTML = contentHTML;
+      document.querySelectorAll('.editable').forEach(cell => {
+        cell.addEventListener('click', handleEditableClick);
+      });
+      
+      document.getElementById('ig-exercise-title').textContent = exConfig.displayName;
+      document.getElementById('ig-1rm').textContent = Math.round(program.workingMax) + 'kg';
+      document.getElementById('ig-target').textContent = program.projected1RM + 'kg';
+      document.getElementById('ig-weeks').textContent = program.duration;
+      document.getElementById('ig-freq').textContent = program.frequency + 'x';
+    }
+    
+    // === EXPORTS ===
+    exportPdfBtn.addEventListener('click', () => {
+      const includeAnalytics = coachMode && document.getElementById('include-analytics').checked;
+      const printWindow = window.open('', '_blank');
+      printWindow.document.write(generateProfessionalPDF(includeAnalytics));
+      printWindow.document.close();
+      setTimeout(() => printWindow.print(), 300);
+    });
+    
+    function generateProfessionalPDF(includeAnalytics = false) {
+      const modeLabels = { easy: 'Conservativo', medium: 'Moderato', hard: 'Aggressivo' };
+      const today = new Date().toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' });
+      const exConfig = program.exerciseConfig;
+      
+      // Analytics section
+      let analyticsHTML = '';
+      if (includeAnalytics) {
+        const volumes = program.weeks.map(w => calcWeekVolume(w));
+        const totalVolume = volumes.reduce((a, b) => a + b, 0);
+        const avgVolume = Math.round(totalVolume / volumes.length);
+        const peakVolume = Math.max(...volumes);
+        const peakWeek = volumes.indexOf(peakVolume) + 1;
+        
+        let volumeTableRows = '';
+        program.weeks.forEach((week, i) => {
+          const vol = volumes[i];
+          const prevVol = i > 0 ? volumes[i - 1] : vol;
+          const delta = i > 0 ? ((vol - prevVol) / prevVol * 100) : 0;
+          const deltaStr = i === 0 ? '—' : `${delta >= 0 ? '+' : ''}${delta.toFixed(0)}%`;
+          const deltaColor = delta >= 0 ? '#16a34a' : '#dc2626';
+          const intensity = calcWeekAvgIntensity(week, program.workingMax).toFixed(0);
+          
+          volumeTableRows += `
+            <tr style="${week.isDeload ? 'background: #f0fdf4;' : ''}">
+              <td style="padding: 10px 16px; border-bottom: 1px solid #e5e5e5; font-weight: 600;">Settimana ${week.week}${week.isDeload ? ' ⟡' : ''}</td>
+              <td style="padding: 10px 16px; border-bottom: 1px solid #e5e5e5; text-align: right;">${formatVolume(vol)}</td>
+              <td style="padding: 10px 16px; border-bottom: 1px solid #e5e5e5; text-align: right; color: ${deltaColor}; font-weight: 500;">${deltaStr}</td>
+              <td style="padding: 10px 16px; border-bottom: 1px solid #e5e5e5; text-align: right;">${intensity}%</td>
+            </tr>
+          `;
+        });
+        
+        analyticsHTML = `
+          <div style="page-break-inside: avoid; margin-bottom: 40px;">
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 3px solid #a78bfa;">
+              <div style="background: linear-gradient(135deg, #a78bfa 0%, #7c3aed 100%); color: white; width: 48px; height: 48px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 18px;">📊</div>
+              <div>
+                <h2 style="margin: 0; font-size: 20px; color: #1a1a1a; font-weight: 700;">Analisi della Periodizzazione</h2>
+                <span style="color: #666; font-size: 12px;">Modalità Coach</span>
+              </div>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px;">
+              <div style="background: #f8f9fa; padding: 20px; border-radius: 12px; text-align: center;">
+                <div style="font-size: 28px; font-weight: 700; color: #7FB3D5;">${formatVolume(totalVolume)}</div>
+                <div style="font-size: 11px; color: #666; text-transform: uppercase; margin-top: 4px;">Volume Totale</div>
+              </div>
+              <div style="background: #f8f9fa; padding: 20px; border-radius: 12px; text-align: center;">
+                <div style="font-size: 28px; font-weight: 700; color: #7FB3D5;">${formatVolume(avgVolume)}</div>
+                <div style="font-size: 11px; color: #666; text-transform: uppercase; margin-top: 4px;">Media Settimanale</div>
+              </div>
+              <div style="background: #f8f9fa; padding: 20px; border-radius: 12px; text-align: center;">
+                <div style="font-size: 28px; font-weight: 700; color: #c9a227;">S${peakWeek}</div>
+                <div style="font-size: 11px; color: #666; text-transform: uppercase; margin-top: 4px;">Picco Volume</div>
+              </div>
+            </div>
+            
+            <div style="background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+              <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                <thead>
+                  <tr style="background: #f8f9fa;">
+                    <th style="padding: 12px 16px; text-align: left; font-weight: 600; color: #666; font-size: 11px; text-transform: uppercase;">Settimana</th>
+                    <th style="padding: 12px 16px; text-align: right; font-weight: 600; color: #666; font-size: 11px; text-transform: uppercase;">Volume</th>
+                    <th style="padding: 12px 16px; text-align: right; font-weight: 600; color: #666; font-size: 11px; text-transform: uppercase;">Delta</th>
+                    <th style="padding: 12px 16px; text-align: right; font-weight: 600; color: #666; font-size: 11px; text-transform: uppercase;">Intensità</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${volumeTableRows}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        `;
+      }
+      
+      let weeksHTML = '';
+      program.weeks.forEach(week => {
+        let daysHTML = '';
+        week.days.forEach(day => {
+          let prescHTML = '';
+          const dayVolume = calcDayVolume(day);
+          
+          day.prescriptions.forEach(p => {
+            const cluster = p.isCluster ? ' (cluster)' : '';
+            const modified = p.modified ? ' style="background: #fef3c7;"' : '';
+            const volume = includeAnalytics ? `<td style="padding: 10px 12px; border-bottom: 1px solid #e5e5e5; color: #7FB3D5; text-align: right;">${calcPrescriptionVolume(p)}kg</td>` : '';
+            prescHTML += `<tr${modified}><td style="padding: 10px 12px; border-bottom: 1px solid #e5e5e5;">${p.sets} x ${p.reps}${cluster}</td><td style="padding: 10px 12px; border-bottom: 1px solid #e5e5e5; font-weight: 700; color: #1a5f7a;">${p.weight} kg</td><td style="padding: 10px 12px; border-bottom: 1px solid #e5e5e5; color: #666;">${p.rest}</td>${volume}</tr>`;
+          });
+          
+          const volumeHeader = includeAnalytics ? '<th style="padding: 10px 12px; text-align: right; font-weight: 600; color: #666; font-size: 11px; text-transform: uppercase;">Volume</th>' : '';
+          const volumeFooter = includeAnalytics ? ` | <strong style="color: #7FB3D5;">Vol: ${formatVolume(dayVolume)}</strong>` : '';
+          
+          const typeColors = { HEAVY: '#dc2626', CLUSTER: '#7c3aed', MEDIUM: '#ea580c', LIGHT: '#16a34a', VOLUME: '#0284c7' };
+          daysHTML += `<div style="background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 16px;"><div style="display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; background: linear-gradient(135deg, #f8f9fa 0%, #f1f3f5 100%); border-bottom: 2px solid ${typeColors[day.type]};"><span style="font-weight: 700; font-size: 15px; color: #1a1a1a;">Giorno ${day.day}</span><div style="display: flex; gap: 8px;"><span style="background: #fef3c7; color: #92400e; padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 600;">${day.intensityRange}</span><span style="background: ${typeColors[day.type]}15; color: ${typeColors[day.type]}; padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 700;">${day.typeConfig.label}</span></div></div><table style="width: 100%; border-collapse: collapse; font-size: 13px;"><thead><tr style="background: #fafafa;"><th style="padding: 10px 12px; text-align: left; font-weight: 600; color: #666; font-size: 11px; text-transform: uppercase;">Serie x Reps</th><th style="padding: 10px 12px; text-align: left; font-weight: 600; color: #666; font-size: 11px; text-transform: uppercase;">Peso</th><th style="padding: 10px 12px; text-align: left; font-weight: 600; color: #666; font-size: 11px; text-transform: uppercase;">Riposo</th>${volumeHeader}</tr></thead><tbody>${prescHTML}</tbody></table><div style="padding: 10px 16px; background: #fafafa; font-size: 12px; color: #666; border-top: 1px solid #e5e5e5;"><strong>RPE:</strong> ${day.rpe} | <em>${day.note}</em>${volumeFooter}</div></div>`;
+        });
+        weeksHTML += `<div style="page-break-inside: avoid; margin-bottom: 40px;"><div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 3px solid #c9a227;"><div style="background: linear-gradient(135deg, #c9a227 0%, #a68a1f 100%); color: white; width: 48px; height: 48px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 18px;">${week.week}</div><div><h2 style="margin: 0; font-size: 20px; color: #1a1a1a; font-weight: 700;">Settimana ${week.week}${week.modified ? ' ✎' : ''}</h2>${week.isDeload ? '<span style="color: #16a34a; font-size: 12px; font-weight: 600;">⟡ Deload Week</span>' : ''}</div></div><div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">${daysHTML}</div></div>`;
+      });
+      
+      return `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${exConfig.displayName} Program</title><style>* { margin: 0; padding: 0; box-sizing: border-box; } body { font-family: -apple-system, sans-serif; background: #f5f5f5; color: #1a1a1a; line-height: 1.5; } @media print { body { background: white; } @page { margin: 15mm; } }</style></head><body><div style="max-width: 900px; margin: 0 auto; padding: 40px 20px;"><div style="background: linear-gradient(135deg, #0a0a0c 0%, #1a1a1e 100%); color: white; padding: 48px 40px; border-radius: 16px; margin-bottom: 32px; text-align: center;"><div style="font-size: 12px; text-transform: uppercase; letter-spacing: 3px; color: #c9a227; margin-bottom: 8px;">MEGINGJÖRÐ</div><h1 style="font-size: 32px; font-weight: 700; margin-bottom: 8px; letter-spacing: 2px;">${exConfig.displayName}</h1><div style="font-size: 14px; color: #a8a8a8; text-transform: uppercase; letter-spacing: 2px;">Raddoppia la tua forza</div><div style="width: 60px; height: 3px; background: #c9a227; margin: 24px auto;"></div><div style="font-size: 13px; color: #888;">Generato il ${today}</div></div><div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 32px;"><div style="background: white; padding: 24px; border-radius: 12px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.06);"><div style="font-size: 32px; font-weight: 700; color: #c9a227;">${Math.round(program.workingMax)}kg</div><div style="font-size: 11px; color: #666; text-transform: uppercase; margin-top: 4px;">1RM Base</div></div><div style="background: white; padding: 24px; border-radius: 12px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.06);"><div style="font-size: 32px; font-weight: 700; color: #16a34a;">${program.projected1RM}kg</div><div style="font-size: 11px; color: #666; text-transform: uppercase; margin-top: 4px;">Target (+${program.projectedGain}%)</div></div><div style="background: white; padding: 24px; border-radius: 12px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.06);"><div style="font-size: 32px; font-weight: 700; color: #1a1a1a;">${program.duration}</div><div style="font-size: 11px; color: #666; text-transform: uppercase; margin-top: 4px;">Settimane</div></div><div style="background: white; padding: 24px; border-radius: 12px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.06);"><div style="font-size: 32px; font-weight: 700; color: #1a1a1a;">${program.frequency}x</div><div style="font-size: 11px; color: #666; text-transform: uppercase; margin-top: 4px;">Frequenza</div></div></div>${analyticsHTML}${weeksHTML}<div style="text-align: center; padding: 32px 0; border-top: 2px solid #e5e5e5; margin-top: 40px;"><div style="font-size: 11px; color: #666; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px;">Programma generato da</div><div style="font-size: 18px; font-weight: 700; color: #c9a227;">nicholasrubini.it • Train Like a Viking</div></div></div></body></html>`;
+    }
+    
+    exportExcelBtn.addEventListener('click', () => {
+      const includeAnalytics = coachMode && document.getElementById('include-analytics').checked;
+      const exConfig = program.exerciseConfig;
+      let rows = [['MEGINGJÖRÐ — ' + exConfig.displayName], ['nicholasrubini.it • Train Like a Viking'], [], ['PARAMETRI'], ['Esercizio', exConfig.name], ['1RM Base', Math.round(program.workingMax) + ' kg'], ['Target 1RM', program.projected1RM + ' kg'], ['Durata', program.duration + ' settimane'], ['Frequenza', program.frequency + 'x'], [], []];
+      
+      // Add analytics section if enabled
+      if (includeAnalytics) {
+        rows.push(['ANALISI VOLUME']);
+        rows.push(['Settimana', 'Volume (kg)', 'Delta %', 'Intensità Media %']);
+        
+        const volumes = program.weeks.map(w => calcWeekVolume(w));
+        program.weeks.forEach((week, i) => {
+          const vol = volumes[i];
+          const prevVol = i > 0 ? volumes[i - 1] : vol;
+          const delta = i > 0 ? ((vol - prevVol) / prevVol * 100).toFixed(1) : '—';
+          const intensity = calcWeekAvgIntensity(week, program.workingMax).toFixed(1);
+          rows.push([
+            'Settimana ' + week.week + (week.isDeload ? ' (Deload)' : ''),
+            vol,
+            delta,
+            intensity + '%'
+          ]);
+        });
+        
+        const totalVolume = volumes.reduce((a, b) => a + b, 0);
+        rows.push(['TOTALE', totalVolume, '', '']);
+        rows.push([]);
+        rows.push([]);
+      }
+      
+      program.weeks.forEach(week => {
+        rows.push(['SETTIMANA ' + week.week + (week.isDeload ? ' (DELOAD)' : '') + (week.modified ? ' ✎' : '')]);
+        rows.push([]);
+        week.days.forEach(day => {
+          const dayVolume = includeAnalytics ? calcDayVolume(day) : '';
+          rows.push(['Giorno ' + day.day, day.typeConfig.label, day.intensityRange, 'RPE ' + day.rpe, includeAnalytics ? 'Vol: ' + dayVolume + 'kg' : '']);
+          
+          const headers = ['Serie x Reps', 'Peso (kg)', 'Riposo', 'Note'];
+          if (includeAnalytics) headers.push('Volume (kg)');
+          rows.push(headers);
+          
+          day.prescriptions.forEach(p => {
+            const row = [p.sets + ' x ' + p.reps, p.weight, p.rest, (p.isCluster ? 'Cluster' : '') + (p.modified ? ' ✎' : '')];
+            if (includeAnalytics) row.push(calcPrescriptionVolume(p));
+            rows.push(row);
+          });
+          rows.push([]);
+        });
+        rows.push([]);
+      });
+      
+      const csv = rows.map(r => r.map(c => { const s = String(c || ''); return s.includes(',') || s.includes('"') ? '"' + s.replace(/"/g, '""') + '"' : s; }).join(',')).join('\n');
+      const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = `${exConfig.name.toLowerCase().replace(/ /g, '-')}-program.csv`;
+      link.click();
+    });
+    
+    exportIgBtn.addEventListener('click', () => igModal.classList.remove('hidden'));
+    igModalClose.addEventListener('click', () => igModal.classList.add('hidden'));
+    igModal.addEventListener('click', (e) => { if (e.target === igModal) igModal.classList.add('hidden'); });
+    
+    downloadIgBtn.addEventListener('click', () => {
+      const canvas = document.getElementById('ig-canvas');
+      const ctx = canvas.getContext('2d');
+      const exConfig = program.exerciseConfig;
+      
+      ctx.fillStyle = '#0a0a0c';
+      ctx.fillRect(0, 0, 1080, 1920);
+      
+      const gradient = ctx.createRadialGradient(540, 400, 0, 540, 400, 800);
+      gradient.addColorStop(0, 'rgba(201, 162, 39, 0.08)');
+      gradient.addColorStop(1, 'transparent');
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, 1080, 1920);
+      
+      // MEGINGJÖRÐ title
+      ctx.fillStyle = '#c9a227';
+      ctx.font = '500 24px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('MEGINGJÖRÐ', 540, 180);
+      
+      ctx.font = '120px serif';
+      ctx.fillText(exConfig.rune, 540, 320);
+      
+      ctx.font = '700 56px serif';
+      ctx.fillText(exConfig.displayName, 540, 440);
+      
+      ctx.fillStyle = '#6b6862';
+      ctx.font = '500 28px sans-serif';
+      ctx.fillText('RADDOPPIA LA TUA FORZA', 540, 500);
+      
+      const stats = [{ value: Math.round(program.workingMax) + 'kg', label: '1RM BASE' }, { value: program.projected1RM + 'kg', label: 'TARGET' }, { value: program.duration.toString(), label: 'SETTIMANE' }, { value: program.frequency + 'x', label: 'FREQUENZA' }];
+      const boxWidth = 220, boxHeight = 180, startX = (1080 - (boxWidth * 2 + 40)) / 2, startY = 650;
+      
+      stats.forEach((stat, i) => {
+        const x = startX + (i % 2) * (boxWidth + 40);
+        const y = startY + Math.floor(i / 2) * (boxHeight + 40);
+        ctx.fillStyle = '#18181c';
+        ctx.beginPath();
+        ctx.roundRect(x, y, boxWidth, boxHeight, 16);
+        ctx.fill();
+        ctx.fillStyle = '#f0ede6';
+        ctx.font = '700 56px serif';
+        ctx.fillText(stat.value, x + boxWidth/2, y + 90);
+        ctx.fillStyle = '#6b6862';
+        ctx.font = '500 18px sans-serif';
+        ctx.fillText(stat.label, x + boxWidth/2, y + 140);
+      });
+      
+      ctx.fillStyle = '#111114';
+      ctx.beginPath();
+      ctx.roundRect(240, 1200, 600, 160, 20);
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(201, 162, 39, 0.3)';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      ctx.fillStyle = '#6b6862';
+      ctx.font = '500 20px sans-serif';
+      ctx.fillText('PROIEZIONE A FINE PROGRAMMA', 540, 1250);
+      ctx.fillStyle = '#4ade80';
+      ctx.font = '700 64px serif';
+      ctx.fillText('+' + program.projectedGain + '%', 540, 1330);
+      
+      ctx.fillStyle = '#c9a227';
+      ctx.font = '600 28px serif';
+      ctx.fillText('nicholasrubini.it', 540, 1680);
+      ctx.fillStyle = '#6b6862';
+      ctx.font = '500 20px sans-serif';
+      ctx.fillText('Train Like a Viking', 540, 1720);
+      
+      const link = document.createElement('a');
+      link.download = `${exConfig.name.toLowerCase().replace(/ /g, '-')}-program.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+      igModal.classList.add('hidden');
+    });
+    
+    // === RESTORE FROM localStorage ON LOAD ===
+    (function initFromStorage() {
+      const saved = loadFromStorage();
+      if (!saved || !saved.program) return;
+      
+      // Check if saved data is not too old (7 days max)
+      const savedAt = new Date(saved.savedAt);
+      const daysSinceSave = (Date.now() - savedAt.getTime()) / (1000 * 60 * 60 * 24);
+      if (daysSinceSave > 7) {
+        clearStorage();
+        return;
+      }
+      
+      // Restore state
+      program = saved.program;
+      currentWeek = saved.currentWeek || 1;
+      selectedExercise = saved.selectedExercise;
+      mode = saved.mode || 'medium';
+      halfMeasures = saved.halfMeasures || false;
+      magneticPlates = saved.magneticPlates || false;
+      coachMode = saved.coachMode || false;
+      
+      // Update UI to match restored state
+      if (halfMeasures) {
+        halfBox.classList.add('checked');
+        halfBox.innerHTML = '<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#0a0a0c" stroke-width="2" stroke-linecap="round"/></svg>';
+      }
+      if (magneticPlates) {
+        magneticBox.classList.add('checked');
+        magneticBox.innerHTML = '<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#0a0a0c" stroke-width="2" stroke-linecap="round"/></svg>';
+      }
+      if (coachMode) {
+        coachModeToggle.classList.add('active');
+        coachAnalytics.classList.add('visible');
+        exportOptions.classList.add('visible');
+      }
+      
+      // Show results directly
+      stepExercise.classList.add('hidden');
+      stepConfig.classList.add('hidden');
+      stepResults.classList.remove('hidden');
+      updateStepIndicators(3);
+      renderResults();
+      
+      if (coachMode) {
+        renderProgressionChart();
+        renderVolumeSummary();
+        renderWeeklyVolumes();
+      }
+      
+      // Show restore notification
+      showToast('Programma ripristinato', 'success');
+    })();
+    
+    // === SWIPE GESTURES FOR WEEK NAVIGATION ===
+    (function initSwipeGestures() {
+      const programContent = document.getElementById('program-content');
+      let touchStartX = 0;
+      let touchStartY = 0;
+      let touchEndX = 0;
+      let touchEndY = 0;
+      const minSwipeDistance = 50;
+      const maxVerticalDistance = 100;
+      
+      programContent.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+        touchStartY = e.changedTouches[0].screenY;
+      }, { passive: true });
+      
+      programContent.addEventListener('touchend', (e) => {
+        if (!program) return;
+        
+        touchEndX = e.changedTouches[0].screenX;
+        touchEndY = e.changedTouches[0].screenY;
+        
+        const deltaX = touchEndX - touchStartX;
+        const deltaY = Math.abs(touchEndY - touchStartY);
+        
+        // Only trigger if horizontal swipe is significant and vertical movement is small
+        if (Math.abs(deltaX) > minSwipeDistance && deltaY < maxVerticalDistance) {
+          if (deltaX < 0 && currentWeek < program.weeks.length) {
+            // Swipe left → next week
+            currentWeek++;
+            renderResults();
+            saveToStorage();
+            hapticFeedback();
+          } else if (deltaX > 0 && currentWeek > 1) {
+            // Swipe right → previous week
+            currentWeek--;
+            renderResults();
+            saveToStorage();
+            hapticFeedback();
+          }
+        }
+      }, { passive: true });
+      
+      function hapticFeedback() {
+        if (navigator.vibrate) {
+          navigator.vibrate(10);
+        }
+      }
+    })();
+  </script>
+</body>
+</html>
